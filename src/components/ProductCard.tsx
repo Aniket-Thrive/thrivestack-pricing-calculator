@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { ProductConfig } from './PricingCalculator';
-import { formatPrice, formatNumber } from '../utils/pricingEngine';
+import { formatPrice, formatNumber, Currency } from '../utils/pricingEngine';
 import { CustomSlider } from './CustomSlider';
 
 interface ProductCardProps {
@@ -10,12 +10,16 @@ interface ProductCardProps {
   isSelected: boolean;
   onToggle: () => void;
   price: number;
-  mtuValue: number;
+  marketingMtuValue: number;
+  productMtuValue: number;
   seatValue: number;
   arrValue: number;
-  onMtuChange: (value: number) => void;
+  onMarketingMtuChange: (value: number) => void;
+  onProductMtuChange: (value: number) => void;
   onSeatChange: (value: number) => void;
   onArrChange: (value: number) => void;
+  currency: Currency;
+  isAnnual: boolean;
   disabled?: boolean;
 }
 
@@ -24,12 +28,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   isSelected,
   onToggle,
   price,
-  mtuValue,
+  marketingMtuValue,
+  productMtuValue,
   seatValue,
   arrValue,
-  onMtuChange,
+  onMarketingMtuChange,
+  onProductMtuChange,
   onSeatChange,
   onArrChange,
+  currency,
+  isAnnual,
   disabled = false
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -37,11 +45,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   const getPricingInfo = () => {
     switch (product.pricingType) {
       case 'mtu':
+        const mtuValue = product.id === 'marketing' ? marketingMtuValue : productMtuValue;
         return `${formatNumber(mtuValue)} MTUs`;
       case 'seat':
         return `${seatValue} seats`;
       case 'arr':
-        return `${formatPrice(arrValue)} ARR`;
+        return `${formatPrice(arrValue, currency)} ARR`;
       case 'free':
         return 'Free';
       default:
@@ -54,11 +63,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
     switch (product.pricingType) {
       case 'mtu':
+        const currentMtuValue = product.id === 'marketing' ? marketingMtuValue : productMtuValue;
+        const handleMtuChange = product.id === 'marketing' ? onMarketingMtuChange : onProductMtuChange;
         return (
           <CustomSlider
             label="Monthly Tracked Users"
-            value={mtuValue}
-            onChange={onMtuChange}
+            value={currentMtuValue}
+            onChange={handleMtuChange}
             min={1000}
             max={1000000}
             step={1000}
@@ -86,12 +97,24 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             min={0}
             max={20000000}
             step={10000}
-            formatValue={(v) => formatPrice(v)}
+            formatValue={(v) => formatPrice(v, currency)}
           />
         );
       default:
         return null;
     }
+  };
+
+  const renderFeatureText = (feature: string) => {
+    // Replace **text** with <strong>text</strong>
+    const parts = feature.split(/(\*\*[^*]+\*\*)/g);
+    return parts.map((part, index) => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        const boldText = part.slice(2, -2);
+        return <strong key={index}>{boldText}</strong>;
+      }
+      return part;
+    });
   };
 
   return (
@@ -112,13 +135,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             className="mt-1 h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
           />
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">{product.name}</h3>
+            <div className="flex items-center space-x-2">
+              <h3 className="text-lg font-semibold text-gray-900">{product.name}</h3>
+              {product.tag && (
+                <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">
+                  {product.tag}
+                </span>
+              )}
+            </div>
             <p className="text-sm text-gray-600">{product.description}</p>
             {disabled && product.dependencies && (
               <p className="text-xs text-orange-600 mt-1">
                 Requires: {product.dependencies.map(dep => 
-                  dep === 'marketing' ? 'Marketing' : 
-                  dep === 'product' ? 'Product Management' : dep
+                  dep === 'marketing' ? 'Marketing Intelligence' : 
+                  dep === 'product' ? 'Product Intelligence' : dep
                 ).join(' + ')}
               </p>
             )}
@@ -126,9 +156,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
         <div className="text-right">
           <div className="text-lg font-bold text-gray-900">
-            {price > 0 ? formatPrice(price) : product.pricingType === 'free' ? 'FREE' : '$0'}
+            {price > 0 ? formatPrice(price, currency) : product.pricingType === 'free' ? 'FREE' : formatPrice(0, currency)}
           </div>
-          <div className="text-sm text-gray-500">{getPricingInfo()}</div>
+          <div className="text-sm text-gray-500">
+            {getPricingInfo()}
+            {isAnnual && price > 0 && (
+              <div className="text-xs text-green-600">20% annual discount applied</div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -147,7 +182,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           {product.features.map((feature, index) => (
             <div key={index} className="flex items-start space-x-2">
               <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-              <p className="text-sm text-gray-700">{feature}</p>
+              <p className="text-sm text-gray-700">{renderFeatureText(feature)}</p>
             </div>
           ))}
         </div>
