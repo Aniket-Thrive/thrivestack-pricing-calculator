@@ -71,6 +71,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     }
   };
 
+  // Always show monthly price for display, even when annual is selected
+  const displayPrice = isAnnual && price > 0 ? price : price;
+
   return (
     <div className={`border rounded-lg p-6 transition-all duration-200 ${
       isSelected 
@@ -119,17 +122,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
         <div className="text-right">
           <div className="text-lg font-bold text-gray-900">
-            {isComingSoon ? 'Coming Soon' : price > 0 ? formatPrice(price, currency) : product.pricingType === 'free' ? 'FREE' : formatPrice(0, currency)}
+            {isComingSoon ? 'Coming Soon' : displayPrice > 0 ? formatPrice(displayPrice, currency) : product.pricingType === 'free' ? 'FREE' : formatPrice(0, currency)}
           </div>
           {!isComingSoon && (
             <div className="text-sm text-gray-500">
               {getPricingInfo()}
-              {price > 0 && (
+              {displayPrice > 0 && (
                 <div className="text-xs text-gray-500">
-                  per {isAnnual ? 'year' : 'month'}
+                  per month
                 </div>
               )}
-              {isAnnual && price > 0 && (
+              {isAnnual && displayPrice > 0 && (
                 <div className="text-xs text-green-600">20% annual discount applied</div>
               )}
             </div>
