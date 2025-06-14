@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   Monitor,
@@ -39,15 +38,14 @@ function IconCircle({
 export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
   variant = "mtv",
 }) => {
-  // Only use the detailed timeline for MTV variant (per requirements)
+  // Only use the timeline for MTV variant
   const timelineItems =
     variant === "mtv"
       ? [
           {
             day: "Day 1",
             tag: "Touchpoint #1",
-            title:
-              "Visitor arrives from Chrome browser",
+            title: "Visitor arrives from Chrome browser",
             id: "visitor_id_123",
             icon: Chrome,
             color: "blue",
@@ -87,7 +85,7 @@ export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
                 <div className="flex items-center gap-1">
                   <Target size={14} className="text-orange-600 mr-1" />
                   <span className="text-xs text-gray-700">
-                    Conversion metrics tracked automatically for visitor_id_123
+                    <strong>Result</strong>: Conversion metrics tracked automatically for visitor_id_123
                   </span>
                 </div>
                 <div className="flex items-center gap-1">
@@ -118,7 +116,6 @@ export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
           },
         ]
       : [
-          // Basic fallback for MTU, preserving old code/behavior
           {
             day: "MTU event",
             tag: "",
@@ -128,31 +125,11 @@ export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
           },
         ];
 
+  // No heading or description for MTV; text now handled in left column of modal!
   return (
-    <div className="flex flex-col sm:flex-row gap-6 sm:items-start">
-      <div className="flex-1">
-        {variant === "mtv" && (
-          <div>
-            <h4 className="font-semibold text-sm mb-2">
-              Conversion Tracking Timeline:
-            </h4>
-            <p className="text-xs text-gray-600 mb-3">
-              We use <b>touchpoints</b> and the <b>time taken</b> to associate a <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">visitor_id</code> and <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">user_id</code> as core criteria for conversion, automatically calculating <b>Time to Conversion</b> and <b>Touchpoints to Conversion</b> metrics.
-            </p>
-          </div>
-        )}
-        {variant !== "mtv" && (
-          <div>
-            <h4 className="font-semibold text-sm mb-2">User Mapping Timeline:</h4>
-            <p className="text-xs text-gray-600 mb-3">
-              Each logged-in user is tracked across browsers and devices, mapping multiple <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">visitor_ids</code> to a single <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">user_id</code>.
-            </p>
-          </div>
-        )}
-      </div>
-      {/* Timeline */}
-      <div className="flex-1 min-w-[260px] max-w-xs">
-        <div className="bg-white border border-gray-200 rounded-lg px-4 py-4 shadow-sm animate-fade-in">
+    <div className="flex flex-col gap-8 w-full">
+      <div className="w-full">
+        <div className="bg-white border border-gray-200 rounded-lg px-4 py-4 shadow-sm animate-fade-in w-full">
           <ol className="relative border-l border-gray-300">
             {timelineItems.map((item, idx) => (
               <li className="mb-8 ml-6 last:mb-0" key={item.day + item.tag}>
