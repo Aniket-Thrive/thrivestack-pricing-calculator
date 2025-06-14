@@ -45,7 +45,7 @@ export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
           {
             day: "Day 1",
             tag: "Touchpoint #1",
-            title: "Visitor arrives from Chrome browser",
+            title: "Visitor arrives (Chrome).",
             id: "visitor_id_123",
             icon: Chrome,
             color: "blue",
@@ -53,7 +53,7 @@ export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
           {
             day: "Day 3",
             tag: "Touchpoint #2",
-            title: "Same visitor returns Chrome incognito browser",
+            title: "Returns via Chrome Incognito.",
             id: "visitor_id_123",
             icon: Chrome,
             color: "blue",
@@ -61,7 +61,7 @@ export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
           {
             day: "Day 5",
             tag: "Touchpoint #3",
-            title: "Same visitor returns Safari browser",
+            title: "Returns (Safari).",
             id: "visitor_id_345",
             icon: Monitor,
             color: "green",
@@ -69,7 +69,7 @@ export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
           {
             day: "Day 24",
             tag: "Touchpoint #4",
-            title: "Same visitor returns Chrome browser",
+            title: "Returns (Chrome) again.",
             id: "visitor_id_123",
             icon: Chrome,
             color: "blue",
@@ -77,7 +77,7 @@ export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
           {
             day: "Day 51",
             tag: "Converted",
-            title: "visitor_id_123 signs up and gets a user_id_123",
+            title: "visitor_id_123 signs up, gets user_id_123",
             icon: User,
             color: "purple",
             extra: (
@@ -100,7 +100,7 @@ export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
           {
             day: "Day 62",
             tag: "Multiple Visitor IDs mapped to same User_ID",
-            title: "visitor_id_345 uses Safari browser and signs_in with User_Id_123",
+            title: "visitor_id_345 signs in with user_id_123",
             icon: Users,
             color: "orange",
             extra: (
