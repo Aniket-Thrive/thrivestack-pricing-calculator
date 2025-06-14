@@ -15,6 +15,7 @@ export interface ProductConfig {
   autoAdd?: boolean;
 }
 
+// Remove "Abuse Detection" from standalone products:
 const products: ProductConfig[] = [
   {
     id: 'marketing',
@@ -30,7 +31,10 @@ const products: ProductConfig[] = [
       '**Campaign Performance** – Analyze campaign efficiency, customer touchpoints, and time to conversion',
       '**Content Effectiveness** – Evaluate visitor engagement with landing pages, white papers, and lead magnets',
       '**Audience Segmentation** – Cluster visitors into behavioral cohorts for targeted marketing strategies',
-      '**Growth Leaks and Drivers** – Identify and fix conversion bottlenecks in your marketing funnel'
+      '**Growth Leaks and Drivers** – Identify and fix conversion bottlenecks in your marketing funnel',
+
+      // Abuse detection merged as inner feature reference:
+      '**Abuse Detection (Optional Add-On)** – Flags suspicious signups (e.g., disposable emails, unusual behavior) to prevent fake accounts and maintain growth quality.'
     ]
   },
   {
@@ -48,21 +52,6 @@ const products: ProductConfig[] = [
       '**Trial vs. Paid Behavior** – Compare engagement between free users and converted paying customers',
       '**Cohort-Based Engagement** – Segment users based on behavior patterns to drive product growth',
       '**Growth Leaks and Drivers** – Identify drop-off points and friction in your product experience'
-    ]
-  },
-  {
-    id: 'abuse-detection',
-    name: 'Abuse Detection',
-    tag: 'Add-On',
-    description: 'Flags suspicious signups (e.g., disposable emails, unusual behavior) to prevent fake accounts and maintain growth quality.',
-    pricingType: 'abuse',
-    dependencies: ['marketing'],
-    features: [
-      '**500 detections/mo included** for $25/mo',
-      '**$0.02** per additional detection',
-      'Real-time flagging of suspicious signups and behaviors',
-      'Protects marketing funnels from fake or abusive activity',
-      'Improve user quality and prevent wasted growth spend'
     ]
   },
   {
@@ -121,6 +110,7 @@ export const PricingCalculator: React.FC = () => {
   const [productMtuValue, setProductMtuValue] = useState(1000);
   const [seatValue, setSeatValue] = useState(5);
   const [arrValue, setArrValue] = useState(100000);
+  const [abuseDetectionEnabled, setAbuseDetectionEnabled] = useState(false);
   const [abuseDetectionValue, setAbuseDetectionValue] = useState(500);
   const [currency, setCurrency] = useState<Currency>('USD');
   const [isAnnual, setIsAnnual] = useState(false);
@@ -176,6 +166,13 @@ export const PricingCalculator: React.FC = () => {
       case 'mtu':
         if (product.id === 'marketing') {
           basePrice = calculateMTUPrice(marketingMtuValue, currency);
+          // Add abuse detection price if enabled:
+          if (abuseDetectionEnabled) {
+            const included = 500;
+            let abusePrice = 25;
+            if (abuseDetectionValue > included) abusePrice += (abuseDetectionValue - included) * 0.02;
+            basePrice += abusePrice;
+          }
         } else if (product.id === 'product') {
           basePrice = calculateMTUPrice(productMtuValue, currency);
         }
@@ -187,11 +184,8 @@ export const PricingCalculator: React.FC = () => {
         basePrice = calculateARRPrice(arrValue, currency);
         break;
       case 'abuse':
-        // $25/mo for up to 500 detections, then $0.02 per detection above that
-        const included = 500;
-        if (abuseDetectionValue <= included) basePrice = 25;
-        else basePrice = 25 + (abuseDetectionValue - included) * 0.02;
-        break;
+        // This case no longer used (abuse removed from products)
+        return 0;
       case 'free':
         return 0;
       default:
@@ -235,8 +229,10 @@ export const PricingCalculator: React.FC = () => {
               productMtuValue={productMtuValue}
               seatValue={seatValue}
               arrValue={arrValue}
-              abuseDetectionValue={abuseDetectionValue}
-              onAbuseDetectionChange={setAbuseDetectionValue}
+              abuseDetectionEnabled={product.id === "marketing" ? abuseDetectionEnabled : false}
+              onAbuseDetectionEnabledChange={product.id === "marketing" ? setAbuseDetectionEnabled : undefined}
+              abuseDetectionValue={product.id === "marketing" ? abuseDetectionValue : undefined}
+              onAbuseDetectionChange={product.id === "marketing" ? setAbuseDetectionValue : undefined}
               onMarketingMtuChange={setMarketingMtuValue}
               onProductMtuChange={setProductMtuValue}
               onSeatChange={setSeatValue}
@@ -263,6 +259,7 @@ export const PricingCalculator: React.FC = () => {
             productMtuValue={productMtuValue}
             seatValue={seatValue}
             arrValue={arrValue}
+            abuseDetectionEnabled={abuseDetectionEnabled}
             abuseDetectionValue={abuseDetectionValue}
             currency={currency}
             isAnnual={isAnnual}

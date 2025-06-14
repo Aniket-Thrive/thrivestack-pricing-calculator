@@ -12,6 +12,7 @@ interface PricingSummaryProps {
   productMtuValue: number;
   seatValue: number;
   arrValue: number;
+  abuseDetectionEnabled?: boolean;
   abuseDetectionValue?: number;
   currency: Currency;
   isAnnual: boolean;
@@ -28,6 +29,7 @@ export const PricingSummary: React.FC<PricingSummaryProps> = ({
   productMtuValue,
   seatValue,
   arrValue,
+  abuseDetectionEnabled = false,
   abuseDetectionValue = 500,
   currency,
   isAnnual,
@@ -122,27 +124,43 @@ export const PricingSummary: React.FC<PricingSummaryProps> = ({
       ) : (
         <>
           <div className="space-y-3 mb-6">
-            {selectedProductDetails.map(product => {
+            {/* Product-level pricing rows */}
+            {products.filter(product=>selectedProducts.includes(product.id)).map(product => {
               const price = calculatePrice(product);
               return (
                 <div key={product.id} className="border-b border-gray-100 pb-3">
                   <div className="flex justify-between items-center">
                     <div>
-                      <div className="font-medium text-gray-900">{product.name}</div>
+                      <div className="font-medium text-gray-900 flex items-center">
+                        {product.name}
+                      </div>
                       <div className="text-xs text-gray-500">
                         {product.pricingType === 'mtu' && product.id === 'marketing' && `${(marketingMtuValue / 1000).toFixed(0)}K MTUs`}
                         {product.pricingType === 'mtu' && product.id === 'product' && `${(productMtuValue / 1000).toFixed(0)}K MTUs`}
                         {product.pricingType === 'seat' && `${seatValue} seats`}
                         {product.pricingType === 'arr' && `${formatPrice(arrValue, currency)} ARR`}
-                        {product.pricingType === 'abuse' && `${abuseDetectionValue} detections`}
                         {product.pricingType === 'free' && 'Included'}
                       </div>
+                      {/* Abuse Detection summary as a sub-item for Marketing Intelligence */}
+                      {product.id === "marketing" && abuseDetectionEnabled && (
+                        <div className="ml-3 mt-1 p-2 border-l-4 border-blue-400 bg-blue-50 rounded">
+                          <div className="flex items-center justify-between">
+                            <span className="text-xs text-blue-900 font-semibold">Abuse Detection</span>
+                            <span className="text-xs text-gray-700">{abuseDetectionValue.toLocaleString()} detections/mo</span>
+                          </div>
+                          <div className="text-xs text-gray-700">
+                            ${abuseDetectionValue <= 500
+                              ? 25
+                              : (25 + ((abuseDetectionValue - 500) * 0.02)).toFixed(2)
+                            }/mo included in price
+                          </div>
+                        </div>
+                      )}
                     </div>
                     <div className="font-medium text-gray-900">
                       {price > 0 ? formatPrice(price, currency) : 'FREE'}
                     </div>
                   </div>
-                  
                   {/* Tier breakdown */}
                   {showDetails && price > 0 && (
                     <div className="mt-2 text-xs text-gray-600">

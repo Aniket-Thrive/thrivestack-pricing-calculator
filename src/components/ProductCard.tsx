@@ -13,6 +13,8 @@ interface ProductCardProps {
   productMtuValue: number;
   seatValue: number;
   arrValue: number;
+  abuseDetectionEnabled?: boolean;
+  onAbuseDetectionEnabledChange?: (enabled: boolean) => void;
   abuseDetectionValue?: number;
   onAbuseDetectionChange?: (value: number) => void;
   onMarketingMtuChange: (value: number) => void;
@@ -33,8 +35,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   productMtuValue,
   seatValue,
   arrValue,
+  abuseDetectionEnabled = false,
+  onAbuseDetectionEnabledChange,
   abuseDetectionValue = 500,
-  onAbuseDetectionChange = () => {},
+  onAbuseDetectionChange,
   onMarketingMtuChange,
   onProductMtuChange,
   onSeatChange,
@@ -87,7 +91,40 @@ export const ProductCard: React.FC<ProductCardProps> = ({
               step={1000}
               formatValue={(v) => formatNumber(v)}
             />
-            <div className="flex items-center space-x-2 text-xs text-blue-600">
+            {/* Abuse Detection as an embedded add-on for marketing */}
+            {product.id === "marketing" && (
+              <div className="border rounded-lg p-4 mt-4 bg-white/90 shadow">
+                <div className="flex items-center mb-2">
+                  <input
+                    type="checkbox"
+                    checked={abuseDetectionEnabled}
+                    onChange={e => onAbuseDetectionEnabledChange && onAbuseDetectionEnabledChange(e.target.checked)}
+                    className="mr-2 h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    id="abuse-detection-checkbox"
+                  />
+                  <label htmlFor="abuse-detection-checkbox" className="font-semibold text-sm text-blue-900">
+                    Add Abuse Detection
+                  </label>
+                </div>
+                <p className="text-xs text-gray-700 mb-3">
+                  Flags suspicious signups (e.g., disposable emails, unusual behavior) to prevent fake accounts and maintain growth quality.
+                  <br />
+                  <span className="text-blue-700 font-medium">First 500 detections/mo included for $25, then $0.02 per detection</span>
+                </p>
+                {abuseDetectionEnabled && (
+                  <CustomSlider
+                    label="Detections Per Month"
+                    value={abuseDetectionValue}
+                    onChange={onAbuseDetectionChange || (() => {})}
+                    min={100}
+                    max={20000}
+                    step={10}
+                    formatValue={v => v.toLocaleString()}
+                  />
+                )}
+              </div>
+            )}
+            <div className="flex items-center space-x-2 text-xs text-blue-600 mt-1">
               <ExternalLink size={12} />
               <a 
                 href="#" 
@@ -121,18 +158,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             max={20000000}
             step={10000}
             formatValue={(v) => formatPrice(v, currency)}
-          />
-        );
-      case 'abuse':
-        return (
-          <CustomSlider
-            label="Detections Per Month"
-            value={abuseDetectionValue}
-            onChange={onAbuseDetectionChange}
-            min={100}
-            max={20000}
-            step={10}
-            formatValue={v => v.toLocaleString()}
           />
         );
       default:
