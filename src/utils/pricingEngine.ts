@@ -156,8 +156,8 @@ export const calculateARRPrice = (arr: number, currency: Currency = 'USD'): numb
   
   const tiers = [
     { min: 100001, max: 1000000, rate: 0.002 },    // 0.2%
-    { min: 1000001, max: 5000000, rate: 0.0025 },  // 0.25%
-    { min: 5000001, max: 20000000, rate: 0.002 }   // 0.2%
+    { min: 1000001, max: 5000000, rate: 0.0015 },  // 0.15%
+    { min: 5000001, max: 20000000, rate: 0.001 }   // 0.1%
   ];
 
   let totalCost = 0;
@@ -184,8 +184,8 @@ export const getARRTierBreakdown = (arr: number, currency: Currency = 'USD'): Ti
   
   const tiers = [
     { min: 100001, max: 1000000, rate: 0.002, label: '$100K-$1M ARR' },
-    { min: 1000001, max: 5000000, rate: 0.0025, label: '$1M-$5M ARR' },
-    { min: 5000001, max: 20000000, rate: 0.002, label: '$5M-$20M ARR' }
+    { min: 1000001, max: 5000000, rate: 0.0015, label: '$1M-$5M ARR' },
+    { min: 5000001, max: 20000000, rate: 0.001, label: '$5M-$20M ARR' }
   ];
 
   const breakdown: TierBreakdown[] = [];
