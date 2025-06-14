@@ -52,7 +52,7 @@ export const PricingSummary: React.FC<PricingSummaryProps> = ({
       configuration: {
         marketingMtus: marketingMtuValue,
         productMtus: productMtuValue,
-        seats: s eatValue,
+        seats: seatValue,
         arr: arrValue,
         currency,
         isAnnual
