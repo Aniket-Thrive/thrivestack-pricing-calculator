@@ -76,6 +76,7 @@ export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
             day: "Day 51",
             tag: "Converted",
             title: "visitor_id_123 signs up, gets user_id_123",
+            id: "visitor_id_123",
             icon: User,
             color: "purple",
             extra: (
@@ -99,6 +100,7 @@ export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
             day: "Day 62",
             tag: "Multiple Visitor IDs mapped to same User_ID",
             title: "visitor_id_345 signs in with user_id_123",
+            id: "visitor_id_345",
             icon: Users,
             color: "orange",
             extra: (
