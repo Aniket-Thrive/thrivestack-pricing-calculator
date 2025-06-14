@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import { ProductConfig } from './PricingCalculator';
@@ -41,6 +40,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   disabled = false
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
+  // Check if product is coming soon
+  const isComingSoon = product.tag === 'Coming Soon';
+  const isDisabled = disabled || isComingSoon;
 
   const getPricingInfo = () => {
     switch (product.pricingType) {
@@ -135,7 +138,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     <div className={`border rounded-lg p-6 transition-all duration-200 ${
       isSelected 
         ? 'border-blue-500 bg-blue-50' 
-        : disabled 
+        : isDisabled 
           ? 'border-gray-200 bg-gray-50 opacity-60' 
           : 'border-gray-200 bg-white hover:border-gray-300'
     }`}>
@@ -145,14 +148,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             type="checkbox"
             checked={isSelected}
             onChange={onToggle}
-            disabled={disabled}
+            disabled={isDisabled}
             className="mt-1 h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
           />
           <div>
             <div className="flex items-center space-x-2">
               <h1 className="text-xl font-bold text-gray-900">{product.name}</h1>
               {product.tag && (
-                <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">
+                <span className={`px-2 py-1 text-xs rounded-full ${
+                  isComingSoon 
+                    ? 'bg-orange-100 text-orange-700' 
+                    : 'bg-blue-100 text-blue-700'
+                }`}>
                   {product.tag}
                 </span>
               )}
@@ -166,27 +173,34 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 ).join(' + ')}
               </p>
             )}
+            {isComingSoon && (
+              <p className="text-xs text-orange-600 mt-1">
+                This module will be available soon. Stay tuned for updates!
+              </p>
+            )}
           </div>
         </div>
         <div className="text-right">
           <div className="text-lg font-bold text-gray-900">
-            {price > 0 ? formatPrice(price, currency) : product.pricingType === 'free' ? 'FREE' : formatPrice(0, currency)}
+            {isComingSoon ? 'Coming Soon' : price > 0 ? formatPrice(price, currency) : product.pricingType === 'free' ? 'FREE' : formatPrice(0, currency)}
           </div>
-          <div className="text-sm text-gray-500">
-            {getPricingInfo()}
-            {price > 0 && (
-              <div className="text-xs text-gray-500">
-                per {isAnnual ? 'year' : 'month'}
-              </div>
-            )}
-            {isAnnual && price > 0 && (
-              <div className="text-xs text-green-600">20% annual discount applied</div>
-            )}
-          </div>
+          {!isComingSoon && (
+            <div className="text-sm text-gray-500">
+              {getPricingInfo()}
+              {price > 0 && (
+                <div className="text-xs text-gray-500">
+                  per {isAnnual ? 'year' : 'month'}
+                </div>
+              )}
+              {isAnnual && price > 0 && (
+                <div className="text-xs text-green-600">20% annual discount applied</div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
-      {isSelected && renderSlider()}
+      {isSelected && !isComingSoon && renderSlider()}
 
       <button
         onClick={() => setIsExpanded(!isExpanded)}

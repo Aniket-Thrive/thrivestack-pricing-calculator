@@ -87,7 +87,7 @@ const products: ProductConfig[] = [
   {
     id: 'revenue',
     name: 'Revenue Intelligence',
-    tag: 'For RevOps, Sales Leaders',
+    tag: 'Coming Soon',
     description: 'Monetization & Growth Intelligence',
     pricingType: 'arr',
     features: [
