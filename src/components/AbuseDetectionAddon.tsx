@@ -30,7 +30,7 @@ export const AbuseDetectionAddon: React.FC<AbuseDetectionAddonProps> = ({
         </label>
       </div>
       <p className="text-xs text-gray-700 mb-3">
-        Detects suspicious signups using rules like disposable email domains, personal email providers, unusual behavior patterns, and bot-like activity to prevent fake accounts and maintain growth quality.
+        Detects suspicious signups using intelligent rules including disposable email domains, blocked domains, plus sign addressing, misspelled emails, personal vs business email detection, unusual behavior patterns, and bot-like activity to prevent fake accounts and maintain growth quality.
         <br />
         <span className="text-blue-700 font-medium">First 500 detections/mo included for $25, then $0.02 per detection</span>
       </p>
