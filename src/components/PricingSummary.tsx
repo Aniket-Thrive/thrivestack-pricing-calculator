@@ -148,7 +148,7 @@ export const PricingSummary: React.FC<PricingSummaryProps> = ({
                         <div className="ml-3 mt-1 p-2 border-l-4 border-blue-400 bg-blue-50 rounded">
                           <div className="flex items-center justify-between">
                             <span className="text-xs text-blue-900 font-semibold">Abuse Detection</span>
-                            <span className="text-xs text-gray-700">{abuseDetectionValue.toLocaleString()} detections/{isAnnual ? 'year' : 'mo'}</span>
+                            <span className="text-xs text-gray-700">{abuseDetectionValue.toLocaleString()} detections/mo</span>
                           </div>
                           <div className="text-xs text-gray-700">
                             ${isAnnual 
