@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { ProductCard } from './ProductCard';
 import { PricingSummary } from './PricingSummary';
@@ -57,6 +58,7 @@ const products: ProductConfig[] = [
     description: 'Flags suspicious signups (e.g., disposable emails, unusual behavior) to prevent fake accounts and maintain growth quality.',
     pricingType: 'abuse',
     dependencies: ['marketing'],
+    autoAdd: true,
     features: [
       '**500 detections/mo included** for $25/mo',
       '**$0.02** per additional detection',
