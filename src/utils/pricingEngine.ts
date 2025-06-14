@@ -155,7 +155,7 @@ export const calculateARRPrice = (arr: number, currency: Currency = 'USD'): numb
   if (arr <= 100000) return 0; // First $100K is free
   
   const tiers = [
-    { min: 100001, max: 1000000, rate: 0.003 },    // 0.3%
+    { min: 100001, max: 1000000, rate: 0.002 },    // 0.2%
     { min: 1000001, max: 5000000, rate: 0.0025 },  // 0.25%
     { min: 5000001, max: 20000000, rate: 0.002 }   // 0.2%
   ];
@@ -183,7 +183,7 @@ export const getARRTierBreakdown = (arr: number, currency: Currency = 'USD'): Ti
   if (arr <= 100000) return [];
   
   const tiers = [
-    { min: 100001, max: 1000000, rate: 0.003, label: '$100K-$1M ARR' },
+    { min: 100001, max: 1000000, rate: 0.002, label: '$100K-$1M ARR' },
     { min: 1000001, max: 5000000, rate: 0.0025, label: '$1M-$5M ARR' },
     { min: 5000001, max: 20000000, rate: 0.002, label: '$5M-$20M ARR' }
   ];
