@@ -15,14 +15,14 @@ interface VisitorToUserAnimationProps {
 
 function SimpleCircle({ color }: { color: string }) {
   const bg = {
-    blue: "bg-blue-500",
-    green: "bg-green-500",
-    orange: "bg-orange-500",
-    purple: "bg-purple-500",
-    gray: "bg-gray-500",
+    blue: "bg-blue-800",
+    green: "bg-green-800", 
+    orange: "bg-orange-800",
+    purple: "bg-purple-800",
+    gray: "bg-gray-800",
   }[color];
   return (
-    <span className={`w-4 h-4 rounded-full ${bg} border-2 border-white shadow-md`}></span>
+    <span className={`w-4 h-4 rounded-full ${bg} border-2 border-blue-800 shadow-md`}></span>
   );
 }
 

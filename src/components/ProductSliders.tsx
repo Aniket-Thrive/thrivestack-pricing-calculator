@@ -150,6 +150,18 @@ export const ProductSliders: React.FC<ProductSlidersProps> = ({
       const learnMoreKind = product.id === 'marketing' ? 'mtv' : 'mtu';
       return (
         <div className="space-y-2">
+          <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center space-x-2 text-xs text-blue-600">
+              <ExternalLink size={12} />
+              <button
+                type="button"
+                className="hover:underline focus:outline-none"
+                onClick={() => handleLearnMoreClick(learnMoreKind)}
+              >
+                Learn more about how {product.id === 'marketing' ? 'MTVs' : 'MTUs'} are calculated
+              </button>
+            </div>
+          </div>
           <CustomSlider
             label={label}
             value={currentMtuValue}
@@ -168,16 +180,6 @@ export const ProductSliders: React.FC<ProductSlidersProps> = ({
               onChange={onAbuseDetectionChange || (() => {})}
             />
           )}
-          <div className="flex items-center space-x-2 text-xs text-blue-600 mt-1">
-            <ExternalLink size={12} />
-            <button
-              type="button"
-              className="hover:underline focus:outline-none"
-              onClick={() => handleLearnMoreClick(learnMoreKind)}
-            >
-              Learn more about how {product.id === 'marketing' ? 'MTVs' : 'MTUs'} are calculated
-            </button>
-          </div>
           <LearnMoreModal
             open={modalOpen && (!!modalType)}
             onOpenChange={setModalOpen}
