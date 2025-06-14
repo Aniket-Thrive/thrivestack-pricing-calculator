@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ProductConfig } from './PricingCalculator';
 import { formatPrice, Currency, getMTUTierBreakdown, getSeatTierBreakdown, getARRTierBreakdown } from '../utils/pricingEngine';
@@ -126,7 +127,8 @@ export const PricingSummary: React.FC<PricingSummaryProps> = ({
           <div className="space-y-3 mb-6">
             {/* Product-level pricing rows */}
             {products.filter(product=>selectedProducts.includes(product.id)).map(product => {
-              const price = calculatePrice(product);
+              const monthlyPrice = calculatePrice(product);
+              const displayPrice = isAnnual ? monthlyPrice * 12 : monthlyPrice;
               return (
                 <div key={product.id} className="border-b border-gray-100 pb-3">
                   <div className="flex justify-between items-center">
@@ -149,27 +151,30 @@ export const PricingSummary: React.FC<PricingSummaryProps> = ({
                             <span className="text-xs text-gray-700">{abuseDetectionValue.toLocaleString()} detections/mo</span>
                           </div>
                           <div className="text-xs text-gray-700">
-                            ${abuseDetectionValue <= 500
-                              ? 25
-                              : (25 + ((abuseDetectionValue - 500) * 0.02)).toFixed(2)
-                            }/mo included in price
+                            ${isAnnual 
+                              ? ((abuseDetectionValue <= 500 ? 25 : (25 + ((abuseDetectionValue - 500) * 0.02))) * 12).toFixed(2)
+                              : (abuseDetectionValue <= 500 ? 25 : (25 + ((abuseDetectionValue - 500) * 0.02)).toFixed(2))
+                            }/{isAnnual ? 'year' : 'mo'} included in price
                           </div>
                         </div>
                       )}
                     </div>
                     <div className="font-medium text-gray-900">
-                      {price > 0 ? formatPrice(price, currency) : 'FREE'}
+                      {displayPrice > 0 ? formatPrice(displayPrice, currency) : 'FREE'}
                     </div>
                   </div>
                   {/* Tier breakdown */}
-                  {showDetails && price > 0 && (
+                  {showDetails && displayPrice > 0 && (
                     <div className="mt-2 text-xs text-gray-600">
-                      {getTierBreakdown(product).map((tier, index) => (
-                        <div key={index} className="flex justify-between">
-                          <span>{tier.tier}</span>
-                          <span>{formatPrice(tier.subtotal, currency)}</span>
-                        </div>
-                      ))}
+                      {getTierBreakdown(product).map((tier, index) => {
+                        const tierPrice = isAnnual ? tier.subtotal * 12 : tier.subtotal;
+                        return (
+                          <div key={index} className="flex justify-between">
+                            <span>{tier.tier}</span>
+                            <span>{formatPrice(tierPrice, currency)}</span>
+                          </div>
+                        );
+                      })}
                     </div>
                   )}
                 </div>
