@@ -56,16 +56,8 @@ export const ProductSliders: React.FC<ProductSlidersProps> = ({
       title: "How Are Monthly Tracked Visitors (MTVs) Calculated?",
       description: (
         <>
-          {/* LEFT: All written explanation & headers */}
+          {/* LEFT: All written explanation & headers - NO timeline heading */}
           <div className="md:w-1/2 w-full space-y-5 pr-0 lg:pr-16 flex flex-col justify-start">
-            <div>
-              <h4 className="font-semibold text-base mb-1">
-                Conversion Tracking Timeline:
-              </h4>
-              <p className="text-sm text-gray-600 mb-3">
-                We use <b>touchpoints</b> and the <b>time taken</b> to associate a <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">visitor_id</code> and <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">user_id</code> as core criteria for conversion, automatically calculating <b>Time to Conversion</b> and <b>Touchpoints to Conversion</b> metrics.
-              </p>
-            </div>
             <p>
               <strong>Monthly Tracked Visitors (MTVs)</strong> represents the number of unique individuals who visit your website or digital property during a given month.
             </p>
@@ -84,9 +76,17 @@ export const ProductSliders: React.FC<ProductSlidersProps> = ({
               This metric is ideal for tracking acquisition and the reach of your marketing campaigns.
             </p>
           </div>
-          {/* RIGHT: Timeline Animation/Graphic only */}
-          <div className="md:w-1/2 w-full flex flex-col justify-center items-center">
-            <div className="w-full xl:max-w-[600px] lg:max-w-[500px] md:max-w-[440px] max-w-full overflow-x-auto">
+          {/* RIGHT: Heading, description, then timeline animation/graphic */}
+          <div className="md:w-1/2 w-full flex flex-col justify-center items-center md:items-stretch">
+            <div className="mb-2 flex flex-col px-0 md:px-2">
+              <h4 className="font-semibold text-base mb-1 text-gray-900">
+                Conversion Tracking Timeline:
+              </h4>
+              <p className="text-sm text-gray-600 mb-3">
+                We use <b>touchpoints</b> and the <b>time taken</b> to associate a <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">visitor_id</code> and <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">user_id</code> as core criteria for conversion, automatically calculating <b>Time to Conversion</b> and <b>Touchpoints to Conversion</b> metrics.
+              </p>
+            </div>
+            <div className="w-full xl:max-w-[800px] lg:max-w-[700px] md:max-w-[500px] max-w-full overflow-x-auto">
               <VisitorToUserAnimation variant="mtv" />
             </div>
           </div>
