@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ProductCard } from './ProductCard';
 import { PricingSummary } from './PricingSummary';
 import { CurrencySelector } from './CurrencySelector';
+import { GrowthIntelligenceAnimation } from './GrowthIntelligenceAnimation';
 import { calculateMTUPrice, calculateSeatPrice, calculateARRPrice, Currency } from '../utils/pricingEngine';
 
 export interface ProductConfig {
@@ -56,7 +57,7 @@ const products: ProductConfig[] = [
   },
   {
     id: 'sales',
-    name: 'Account & Sales Management',
+    name: 'Account Intelligence',
     tag: 'For Sales',
     description: 'Converting Leads & Accelerating Deals',
     pricingType: 'seat',
@@ -211,6 +212,8 @@ export const PricingCalculator: React.FC = () => {
           Measure growth, identify your biggest drivers, and fix revenue leaks—with flexible plans designed to evolve with your business.
         </p>
       </div>
+
+      <GrowthIntelligenceAnimation />
 
       <div className="flex justify-center mb-6">
         <CurrencySelector currency={currency} onCurrencyChange={setCurrency} />

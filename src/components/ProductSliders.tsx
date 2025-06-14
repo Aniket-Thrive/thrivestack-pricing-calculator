@@ -61,12 +61,19 @@ export const ProductSliders: React.FC<ProductSlidersProps> = ({
           </p>
           <ul className="mt-2 list-disc ml-6 text-gray-700">
             <li>
-              Each visitor is counted once using device fingerprinting technology that combines device and browser IDs to create a unique <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">visitor_id</code>, which differs on different browsers and remains consistent on the browser across sessions and even in private/incognito mode.
+              Each visitor is counted once using device fingerprinting technology that combines device and browser IDs to create a unique <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">visitor_id</code>, which differs across browsers but remains consistent within the same browser across sessions and incognito mode.
             </li>
             <li>
               MTVs include anonymous visitors, prospects, and users before they have signed up.
             </li>
+            <li>
+              We use touchpoints and time taken to associate <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">visitor_ids</code> with <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">user_ids</code> as core criteria for conversion, automatically calculating <strong>Time to Conversion</strong> and <strong>Touchpoints to Conversion</strong> metrics.
+            </li>
           </ul>
+          <div className="mt-4">
+            <h4 className="font-semibold text-sm mb-2">Visitor to User Conversion Tracking:</h4>
+            <VisitorToUserAnimation variant="mtv" />
+          </div>
           <p className="mt-2">
             This metric is ideal for tracking acquisition and the reach of your marketing campaigns.
           </p>
@@ -96,7 +103,7 @@ export const ProductSliders: React.FC<ProductSlidersProps> = ({
           </ul>
           <div className="mt-4">
             <h4 className="font-semibold text-sm mb-2">Visitor to User Mapping Timeline:</h4>
-            <VisitorToUserAnimation />
+            <VisitorToUserAnimation variant="mtu" />
           </div>
           <p className="mt-2">
             Use this metric to manage feature adoption, retention, and true customer growth.
