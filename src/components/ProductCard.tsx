@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { ProductConfig } from './PricingCalculator';
@@ -160,6 +159,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           </div>
           <div className="text-sm text-gray-500">
             {getPricingInfo()}
+            {price > 0 && (
+              <div className="text-xs text-gray-500">
+                per {isAnnual ? 'year' : 'month'}
+              </div>
+            )}
             {isAnnual && price > 0 && (
               <div className="text-xs text-green-600">20% annual discount applied</div>
             )}

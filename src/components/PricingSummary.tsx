@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ProductConfig } from './PricingCalculator';
 import { formatPrice, Currency, getMTUTierBreakdown, getSeatTierBreakdown, getARRTierBreakdown } from '../utils/pricingEngine';
@@ -85,7 +84,7 @@ export const PricingSummary: React.FC<PricingSummaryProps> = ({
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6 sticky top-6">
+    <div className="bg-white border border-gray-200 rounded-lg p-6 sticky top-6 shadow-lg max-h-screen overflow-y-auto">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Pricing Summary</h3>
       
       {/* Annual/Monthly Toggle */}
