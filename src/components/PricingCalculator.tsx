@@ -68,6 +68,7 @@ const products: ProductConfig[] = [
   {
     id: 'success',
     name: 'Customer Success',
+    tag: 'For CSMs',
     description: 'Retention & Expansion',
     pricingType: 'free',
     autoAdd: true,
@@ -83,6 +84,7 @@ const products: ProductConfig[] = [
   {
     id: 'revenue',
     name: 'Revenue Intelligence',
+    tag: 'For RevOps, Sales Leaders',
     description: 'Monetization & Growth Intelligence',
     pricingType: 'arr',
     features: [

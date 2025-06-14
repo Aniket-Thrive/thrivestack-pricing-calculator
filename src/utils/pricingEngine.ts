@@ -82,7 +82,7 @@ export const getMTUTierBreakdown = (mtus: number, currency: Currency = 'USD'): T
     if (tierMTUs > 0) {
       const subtotal = (tierMTUs / 1000) * tier.rate * CURRENCY_RATES[currency];
       breakdown.push({
-        tier: `${formatNumber(tier.min)}-${formatNumber(Math.min(tier.max, mtus))} MTUs`,
+        tier: `${formatNumber(tier.min)}-${formatNumber(Math.min(tier.max, mtus))} MTUs (${formatPrice(tier.rate * CURRENCY_RATES[currency], currency)}/1K)`,
         quantity: tierMTUs,
         rate: tier.rate * CURRENCY_RATES[currency],
         subtotal: Math.round(subtotal * 100) / 100
@@ -139,7 +139,7 @@ export const getSeatTierBreakdown = (seats: number, currency: Currency = 'USD'):
     if (tierSeats > 0) {
       const subtotal = tierSeats * tier.rate * CURRENCY_RATES[currency];
       breakdown.push({
-        tier: tier.label,
+        tier: `${tier.label} (${formatPrice(tier.rate * CURRENCY_RATES[currency], currency)}/seat)`,
         quantity: tierSeats,
         rate: tier.rate * CURRENCY_RATES[currency],
         subtotal: Math.round(subtotal * 100) / 100
@@ -200,7 +200,7 @@ export const getARRTierBreakdown = (arr: number, currency: Currency = 'USD'): Ti
     if (tierARR > 0) {
       const subtotal = tierARR * tier.rate * CURRENCY_RATES[currency];
       breakdown.push({
-        tier: tier.label,
+        tier: `${tier.label} (${tier.rate * 100}%)`,
         quantity: tierARR,
         rate: tier.rate * 100, // Convert to percentage
         subtotal: Math.round(subtotal * 100) / 100
