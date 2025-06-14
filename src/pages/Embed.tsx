@@ -7,30 +7,12 @@ const Embed = () => {
 
   const embedCode = `<!-- ThriveStack Pricing Calculator Embed -->
 <div id="thrivestack-pricing-calculator"></div>
-<script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="${window.location.origin}/widget.js"></script>
 <script>
-  // Load ThriveStack Pricing Calculator
-  (function() {
-    const script = document.createElement('script');
-    script.src = window.location.origin + '/widget.js';
-    script.onload = function() {
-      if (window.ThriveStackPricingCalculator) {
-        window.ThriveStackPricingCalculator.render('thrivestack-pricing-calculator');
-      }
-    };
-    document.head.appendChild(script);
-  })();
-</script>
-
-<style>
-  #thrivestack-pricing-calculator {
-    width: 100%;
-    min-height: 600px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-</style>`;
+  ThriveStackCalculator.init({
+    container: '#thrivestack-pricing-calculator'
+  });
+</script>`;
 
   const handleCopyCode = () => {
     navigator.clipboard.writeText(embedCode);
@@ -59,7 +41,7 @@ const Embed = () => {
               </div>
               <div>
                 <h3 className="font-medium text-gray-900">Copy the embed code</h3>
-                <p className="text-sm text-gray-600">Use the HTML code below to add the pricing calculator to your website.</p>
+                <p className="text-sm text-gray-600">Use the simplified HTML code below to add the pricing calculator to your website.</p>
               </div>
             </div>
             <div className="flex items-start space-x-3">
@@ -76,16 +58,16 @@ const Embed = () => {
                 3
               </div>
               <div>
-                <h3 className="font-medium text-gray-900">Customize (optional)</h3>
-                <p className="text-sm text-gray-600">Modify the styles to match your website's design.</p>
+                <h3 className="font-medium text-gray-900">Test your embed</h3>
+                <p className="text-sm text-gray-600">Use our test page to see how the embed works before adding it to your site.</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-900">Embed Code</h2>
+            <h2 className="text-xl font-semibold text-gray-900">Simplified Embed Code</h2>
             <button
               onClick={handleCopyCode}
               className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -114,17 +96,23 @@ const Embed = () => {
           </div>
 
           <div className="mt-6 p-4 bg-yellow-50 rounded-lg">
-            <h3 className="font-medium text-yellow-900 mb-2">Important Notes:</h3>
-            <ul className="text-sm text-yellow-800 space-y-1">
-              <li>• The calculator will automatically adapt to your website's styles</li>
-              <li>• Make sure your website allows loading external scripts</li>
-              <li>• The embed is fully responsive and mobile-friendly</li>
-              <li>• Trial signup and sales buttons will redirect to ThriveStack</li>
-            </ul>
+            <h3 className="font-medium text-yellow-900 mb-2">Script Location:</h3>
+            <p className="text-sm text-yellow-800 mb-2">
+              The widget script is hosted at: <code className="bg-yellow-100 px-1 rounded">{window.location.origin}/widget.js</code>
+            </p>
+            <p className="text-sm text-yellow-800">
+              This script contains all the necessary dependencies and will automatically load the pricing calculator.
+            </p>
           </div>
         </div>
 
-        <div className="text-center mt-8">
+        <div className="text-center space-x-4">
+          <a
+            href="/embed-test"
+            className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+          >
+            Test Embed Code →
+          </a>
           <a
             href="/"
             className="inline-flex items-center px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
