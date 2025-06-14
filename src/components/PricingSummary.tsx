@@ -78,11 +78,11 @@ export const PricingSummary: React.FC<PricingSummaryProps> = ({
     switch (product.pricingType) {
       case 'mtu':
         const mtuValue = product.id === 'marketing' ? marketingMtuValue : productMtuValue;
-        return getMTUTierBreakdown(mtuValue, currency);
+        return getMTUTierBreakdown(mtuValue, currency, isAnnual);
       case 'seat':
-        return getSeatTierBreakdown(seatValue, currency);
+        return getSeatTierBreakdown(seatValue, currency, isAnnual);
       case 'arr':
-        return getARRTierBreakdown(arrValue, currency);
+        return getARRTierBreakdown(arrValue, currency, isAnnual);
       default:
         return [];
     }
@@ -148,7 +148,7 @@ export const PricingSummary: React.FC<PricingSummaryProps> = ({
                         <div className="ml-3 mt-1 p-2 border-l-4 border-blue-400 bg-blue-50 rounded">
                           <div className="flex items-center justify-between">
                             <span className="text-xs text-blue-900 font-semibold">Abuse Detection</span>
-                            <span className="text-xs text-gray-700">{abuseDetectionValue.toLocaleString()} detections/mo</span>
+                            <span className="text-xs text-gray-700">{abuseDetectionValue.toLocaleString()} detections/{isAnnual ? 'year' : 'mo'}</span>
                           </div>
                           <div className="text-xs text-gray-700">
                             ${isAnnual 
@@ -166,15 +166,12 @@ export const PricingSummary: React.FC<PricingSummaryProps> = ({
                   {/* Tier breakdown */}
                   {showDetails && displayPrice > 0 && (
                     <div className="mt-2 text-xs text-gray-600">
-                      {getTierBreakdown(product).map((tier, index) => {
-                        const tierPrice = isAnnual ? tier.subtotal * 12 : tier.subtotal;
-                        return (
-                          <div key={index} className="flex justify-between">
-                            <span>{tier.tier}</span>
-                            <span>{formatPrice(tierPrice, currency)}</span>
-                          </div>
-                        );
-                      })}
+                      {getTierBreakdown(product).map((tier, index) => (
+                        <div key={index} className="flex justify-between">
+                          <span>{tier.tier}</span>
+                          <span>{formatPrice(tier.subtotal, currency)}</span>
+                        </div>
+                      ))}
                     </div>
                   )}
                 </div>

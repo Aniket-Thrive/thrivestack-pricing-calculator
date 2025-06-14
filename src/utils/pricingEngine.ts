@@ -59,7 +59,7 @@ export const calculateMTUPrice = (mtus: number, currency: Currency = 'USD'): num
   return Math.round(convertedPrice * 100) / 100;
 };
 
-export const getMTUTierBreakdown = (mtus: number, currency: Currency = 'USD'): TierBreakdown[] => {
+export const getMTUTierBreakdown = (mtus: number, currency: Currency = 'USD', isAnnual: boolean = false): TierBreakdown[] => {
   if (mtus <= 0) return [];
   
   const tiers = [
@@ -80,11 +80,18 @@ export const getMTUTierBreakdown = (mtus: number, currency: Currency = 'USD'): T
     const tierMTUs = Math.min(tierSize, tier.max >= mtus ? mtus - tier.min + 1 : tier.max - tier.min + 1);
     
     if (tierMTUs > 0) {
-      const subtotal = (tierMTUs / 1000) * tier.rate * CURRENCY_RATES[currency];
+      let displayRate = tier.rate * CURRENCY_RATES[currency];
+      let subtotal = (tierMTUs / 1000) * displayRate;
+      
+      if (isAnnual) {
+        displayRate = displayRate * 0.8 * 12; // Apply annual discount and multiply by 12
+        subtotal = subtotal * 0.8 * 12;
+      }
+      
       breakdown.push({
-        tier: `${formatNumber(tier.min)}-${formatNumber(Math.min(tier.max, mtus))} MTUs (${formatPrice(tier.rate * CURRENCY_RATES[currency], currency)}/1K)`,
+        tier: `${formatNumber(tier.min)}-${formatNumber(Math.min(tier.max, mtus))} MTUs (${formatPrice(displayRate, currency)}/1K)`,
         quantity: tierMTUs,
-        rate: tier.rate * CURRENCY_RATES[currency],
+        rate: displayRate,
         subtotal: Math.round(subtotal * 100) / 100
       });
       remainingMTUs -= tierMTUs;
@@ -119,7 +126,7 @@ export const calculateSeatPrice = (seats: number, currency: Currency = 'USD'): n
   return Math.round(convertedPrice * 100) / 100;
 };
 
-export const getSeatTierBreakdown = (seats: number, currency: Currency = 'USD'): TierBreakdown[] => {
+export const getSeatTierBreakdown = (seats: number, currency: Currency = 'USD', isAnnual: boolean = false): TierBreakdown[] => {
   if (seats <= 2) return [];
   
   const paidSeats = seats - 2;
@@ -137,11 +144,18 @@ export const getSeatTierBreakdown = (seats: number, currency: Currency = 'USD'):
     
     const tierSeats = Math.min(remainingSeats, tier.max - tier.min + 1);
     if (tierSeats > 0) {
-      const subtotal = tierSeats * tier.rate * CURRENCY_RATES[currency];
+      let displayRate = tier.rate * CURRENCY_RATES[currency];
+      let subtotal = tierSeats * displayRate;
+      
+      if (isAnnual) {
+        displayRate = displayRate * 0.8 * 12; // Apply annual discount and multiply by 12
+        subtotal = subtotal * 0.8 * 12;
+      }
+      
       breakdown.push({
-        tier: `${tier.label} (${formatPrice(tier.rate * CURRENCY_RATES[currency], currency)}/seat)`,
+        tier: `${tier.label} (${formatPrice(displayRate, currency)}/seat)`,
         quantity: tierSeats,
-        rate: tier.rate * CURRENCY_RATES[currency],
+        rate: displayRate,
         subtotal: Math.round(subtotal * 100) / 100
       });
       remainingSeats -= tierSeats;
@@ -179,7 +193,7 @@ export const calculateARRPrice = (arr: number, currency: Currency = 'USD'): numb
   return Math.round(convertedPrice * 100) / 100;
 };
 
-export const getARRTierBreakdown = (arr: number, currency: Currency = 'USD'): TierBreakdown[] => {
+export const getARRTierBreakdown = (arr: number, currency: Currency = 'USD', isAnnual: boolean = false): TierBreakdown[] => {
   if (arr <= 100000) return [];
   
   const tiers = [
@@ -198,11 +212,17 @@ export const getARRTierBreakdown = (arr: number, currency: Currency = 'USD'): Ti
     const tierARR = Math.min(remainingARR, tierMax);
     
     if (tierARR > 0) {
-      const subtotal = tierARR * tier.rate * CURRENCY_RATES[currency];
+      let displayRate = tier.rate * 100; // Convert to percentage
+      let subtotal = tierARR * tier.rate * CURRENCY_RATES[currency];
+      
+      if (isAnnual) {
+        subtotal = subtotal * 0.8 * 12; // Apply annual discount and multiply by 12
+      }
+      
       breakdown.push({
-        tier: `${tier.label} (${tier.rate * 100}%)`,
+        tier: `${tier.label} (${displayRate}%)`,
         quantity: tierARR,
-        rate: tier.rate * 100, // Convert to percentage
+        rate: displayRate,
         subtotal: Math.round(subtotal * 100) / 100
       });
       remainingARR -= tierARR;
