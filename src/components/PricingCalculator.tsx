@@ -30,7 +30,8 @@ const products: ProductConfig[] = [
       '**Bounce Rate & Engagement** – Measure site interaction levels and optimize for better retention',
       '**Campaign Performance** – Analyze campaign efficiency, customer touchpoints, and time to conversion',
       '**Content Effectiveness** – Evaluate visitor engagement with landing pages, white papers, and lead magnets',
-      '**Audience Segmentation** – Cluster visitors into behavioral cohorts for targeted marketing strategies'
+      '**Audience Segmentation** – Cluster visitors into behavioral cohorts for targeted marketing strategies',
+      '**Growth Leaks** – Identify and fix conversion bottlenecks in your marketing funnel'
     ]
   },
   {
@@ -46,7 +47,8 @@ const products: ProductConfig[] = [
       '**Feature Usage & Adoption** – Identify most-used features, engagement intensity, and underutilized areas',
       '**Drop-Off & Retention Analysis** – Detect bottlenecks in product adoption and improve user retention',
       '**Trial vs. Paid Behavior** – Compare engagement between free users and converted paying customers',
-      '**Cohort-Based Engagement** – Segment users based on behavior patterns to drive product growth'
+      '**Cohort-Based Engagement** – Segment users based on behavior patterns to drive product growth',
+      '**Growth Leaks** – Identify drop-off points and friction in your product experience'
     ]
   },
   {
@@ -62,7 +64,8 @@ const products: ProductConfig[] = [
       '**Sales-Assist Insights** – Identify visitors likely to convert based on depth of product usage',
       '**Trial & POC Performance** – Measure transition rates from free trials to paid conversions',
       '**Sales Attribution Analysis** – Understand the impact of marketing-driven vs. direct sales efforts',
-      '**Expansion & Upsell Signals** – Surface upsell and cross-sell opportunities using product usage data'
+      '**Expansion & Upsell Signals** – Surface upsell and cross-sell opportunities using product usage data',
+      '**Growth Leaks** – Spot sales process inefficiencies and conversion roadblocks'
     ]
   },
   {
@@ -78,7 +81,8 @@ const products: ProductConfig[] = [
       '**Account Health Scoring** – Predict renewal likelihood based on user activity and adoption rates',
       '**Renewal & Expansion Tracking** – Assess contract renewal trends and proactive upsell opportunities',
       '**User Engagement Metrics** – Track product usage across key retention periods to optimize stickiness',
-      '**Proactive Customer Interactions** – Automate success recommendations and personalized outreach strategies'
+      '**Proactive Customer Interactions** – Automate success recommendations and personalized outreach strategies',
+      '**Growth Leaks** – Identify churn risks and retention gaps before they impact revenue'
     ]
   },
   {
@@ -91,7 +95,8 @@ const products: ProductConfig[] = [
       '**Revenue Performance Overview** – Track MRR, trial-to-paid transitions, and churn trends across cohorts',
       '**Subscription Analytics** – Measure pricing efficiency, customer lifetime value, and renewal rates',
       '**Revenue Attribution Mapping** – Link acquisition sources and product engagement to monetization impact',
-      '**Expansion Revenue Analysis** – Identify high-growth accounts for targeted upsell opportunities'
+      '**Expansion Revenue Analysis** – Identify high-growth accounts for targeted upsell opportunities',
+      '**Growth Leaks** – Uncover revenue optimization opportunities across the entire customer lifecycle'
     ]
   }
 ];
