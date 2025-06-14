@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ExternalLink } from 'lucide-react';
 import { ProductConfig } from './PricingCalculator';
@@ -65,9 +64,6 @@ export const ProductSliders: React.FC<ProductSlidersProps> = ({
             </li>
             <li>
               MTVs include anonymous visitors, prospects, and users before they have signed up.
-            </li>
-            <li>
-              Bot or non-human traffic is automatically filtered out to ensure accurate reporting.
             </li>
           </ul>
           <p className="mt-2">
