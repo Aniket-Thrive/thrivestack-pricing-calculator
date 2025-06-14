@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   Monitor,
@@ -13,24 +12,16 @@ interface VisitorToUserAnimationProps {
   variant?: "mtu" | "mtv";
 }
 
-function IconCircle({
-  icon: Icon,
-  color,
-}: {
-  icon: typeof Chrome;
-  color: string;
-}) {
+function SimpleCircle({ color }: { color: string }) {
   const bg = {
-    blue: "bg-blue-100 border-blue-300 text-blue-600",
-    green: "bg-green-100 border-green-300 text-green-600",
-    orange: "bg-orange-100 border-orange-300 text-orange-600",
-    purple: "bg-purple-100 border-purple-300 text-purple-600",
-    gray: "bg-gray-100 border-gray-300 text-gray-500",
+    blue: "bg-blue-500",
+    green: "bg-green-500",
+    orange: "bg-orange-500",
+    purple: "bg-purple-500",
+    gray: "bg-gray-500",
   }[color];
   return (
-    <span className={`p-2 rounded-full border ${bg}`}>
-      <Icon size={18} />
-    </span>
+    <span className={`w-3 h-3 rounded-full ${bg}`}></span>
   );
 }
 
@@ -167,9 +158,9 @@ export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
                 {/* Empty left space for right-side items */}
                 {isRightSide && <div className="w-1/2"></div>}
                 
-                {/* Center icon */}
+                {/* Center circle */}
                 <div className="absolute left-1/2 transform -translate-x-1/2 z-10">
-                  <IconCircle icon={item.icon} color={item.color} />
+                  <SimpleCircle color={item.color} />
                 </div>
                 
                 {/* Right side content */}
