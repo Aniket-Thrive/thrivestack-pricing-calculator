@@ -61,7 +61,7 @@ export const ProductSliders: React.FC<ProductSlidersProps> = ({
           </p>
           <ul className="mt-2 list-disc ml-6 text-gray-700">
             <li>
-              Each visitor is counted once using device fingerprinting technology that creates a unique identifier, which remains consistent even in incognito mode or across different browsers on the same device.
+              Each visitor is counted once using device fingerprinting technology that combines device and browser IDs to create a unique <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">visitor_id</code>, which remains consistent across different browsers on the same device and even in incognito mode.
             </li>
             <li>
               MTVs include anonymous visitors, prospects, and users before they have signed up.
@@ -81,11 +81,11 @@ export const ProductSliders: React.FC<ProductSlidersProps> = ({
       description: (
         <>
           <p>
-            <strong>Monthly Tracked Users (MTUs)</strong> measures unique active product users identified by a unique user_id that gets assigned after they have signed up and are actively using your product in a given month.
+            <strong>Monthly Tracked Users (MTUs)</strong> measures unique active product users identified by a unique <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">user_id</code> that gets assigned after they have signed up and are actively using your product in a given month.
           </p>
           <ul className="mt-2 list-disc ml-6 text-gray-700">
             <li>
-              Each logged-in user with a unique user_id is counted only once per month, even if they log in from multiple devices or sessions.
+              Each logged-in user with a unique <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">user_id</code> is counted only once per month, even if they log in from multiple devices or sessions.
             </li>
             <li>
               MTUs capture actual product engagement and adoption, helping you understand your active user base.
