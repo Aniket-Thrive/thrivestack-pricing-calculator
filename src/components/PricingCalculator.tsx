@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { ProductCard } from './ProductCard';
 import { PricingSummary } from './PricingSummary';
@@ -58,7 +57,6 @@ const products: ProductConfig[] = [
     description: 'Flags suspicious signups (e.g., disposable emails, unusual behavior) to prevent fake accounts and maintain growth quality.',
     pricingType: 'abuse',
     dependencies: ['marketing'],
-    autoAdd: true,
     features: [
       '**500 detections/mo included** for $25/mo',
       '**$0.02** per additional detection',
@@ -213,10 +211,10 @@ export const PricingCalculator: React.FC = () => {
     <div className="max-w-6xl mx-auto p-6 bg-white">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          ThriveStack Pricing Calculator
+          Growth Intelligence That Scales With You
         </h1>
         <p className="text-lg text-gray-600">
-          Select your modules and estimate your monthly costs
+          Measure growth, identify your biggest drivers, and fix revenue leaks—with flexible plans designed to evolve with your business.
         </p>
       </div>
 
