@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   Monitor,
@@ -21,7 +22,7 @@ function SimpleCircle({ color }: { color: string }) {
     gray: "bg-gray-500",
   }[color];
   return (
-    <span className={`w-3 h-3 rounded-full ${bg}`}></span>
+    <span className={`w-4 h-4 rounded-full ${bg} border-2 border-white shadow-md`}></span>
   );
 }
 
