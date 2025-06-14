@@ -79,14 +79,14 @@ export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
             icon: User,
             color: "purple",
             extra: (
-              <div className="space-y-1 pl-2">
-                <div className="flex items-center gap-1">
+              <div className="space-y-1 pr-2">
+                <div className="flex items-center gap-1 justify-end">
                   <Target size={14} className="text-orange-600 mr-1" />
                   <span className="text-xs text-gray-700">
                     <strong>Result</strong>: Conversion metrics tracked automatically for visitor_id_123
                   </span>
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 justify-end">
                   <Clock size={13} className="text-orange-600 mr-1" />
                   <span className="text-xs text-green-700 font-semibold">
                     ✓ 3 touchpoints, 51 days to conversion
@@ -102,11 +102,11 @@ export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
             icon: Users,
             color: "orange",
             extra: (
-              <div className="space-y-1 pl-2">
-                <span className="block text-xs text-gray-700">
+              <div className="space-y-1 pr-2">
+                <span className="block text-xs text-gray-700 text-right">
                   visitor_id_123 and visitor_id_345 mapped to user_id_123
                 </span>
-                <span className="block text-xs text-green-700 font-semibold">
+                <span className="block text-xs text-green-700 font-semibold text-right">
                   ✓ 4 touchpoints, 51 days to conversion
                 </span>
               </div>
@@ -123,32 +123,35 @@ export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
           },
         ];
 
-  // No border and panel, just remove the panel classes.
+  // Timeline right-aligned logic
+  // border-r for vertical line; icon and metadata on the far right; text right-justified
   return (
     <div className="flex flex-col gap-8 w-full">
       <div className="w-full">
-        <ol className="relative border-l border-gray-300">
+        <ol className="relative border-r border-gray-300 mr-2">
           {timelineItems.map((item, idx) => (
-            <li className="mb-8 ml-6 last:mb-0" key={item.day + item.tag}>
-              <span className="absolute -left-4 flex items-center">
+            <li
+              className="mb-8 mr-6 last:mb-0 relative"
+              key={item.day + item.tag}
+            >
+              <span className="absolute -right-4 top-0 flex items-center">
                 <IconCircle icon={item.icon} color={item.color} />
               </span>
-              <div>
-                {/*  Header line: Day, visitor_id (if present), Touchpoint tag to right */}
-                <div className="flex items-center justify-between w-full">
-                  <div className="flex items-center gap-2">
+              <div className="pr-14 text-right">
+                {/*  Header line: Day, visitor_id (if present), Touchpoint tag to far right */}
+                <div className="flex items-center justify-end w-full gap-0">
+                  <div className="flex items-center gap-2 justify-end">
                     <span className="text-xs font-semibold text-gray-900">{item.day}</span>
                     {item.id && (
-                      <span className="text-xs text-gray-400 ml-2">{item.id}</span>
+                      <span className="text-xs text-gray-400 ml-1">{item.id}</span>
                     )}
                   </div>
                   {item.tag && (
-                    <span className="ml-2 text-[11px] px-2 py-0.5 rounded bg-gray-100 text-blue-700 border border-blue-100 font-semibold">
+                    <span className="ml-3 text-[11px] px-2 py-0.5 rounded bg-gray-100 text-blue-700 border border-blue-100 font-semibold whitespace-nowrap">
                       {item.tag}
                     </span>
                   )}
                 </div>
-                {/* Only one content line for title */}
                 <div className="mt-0.5 text-xs text-gray-700">
                   {item.title}
                 </div>
