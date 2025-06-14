@@ -3,6 +3,7 @@ import { ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import { ProductConfig } from './PricingCalculator';
 import { formatPrice, formatNumber, Currency } from '../utils/pricingEngine';
 import { CustomSlider } from './CustomSlider';
+import { LearnMoreModal } from './LearnMoreModal';
 
 interface ProductCardProps {
   product: ProductConfig;
@@ -49,6 +50,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  // Modal state for Learn More
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<'mtu' | 'mtv' | null>(null);
+
   // Check if product is coming soon
   const isComingSoon = product.tag === 'Coming Soon';
   const isDisabled = disabled || isComingSoon;
@@ -72,6 +77,63 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     }
   };
 
+  const handleLearnMoreClick = (type: 'mtu' | 'mtv') => {
+    setModalType(type);
+    setModalOpen(true);
+  };
+
+  // Define modal content for both types
+  const learnMoreContent = {
+    mtv: {
+      title: 'How Are Monthly Tracked Visitors (MTVs) Calculated?',
+      description: (
+        <>
+          <p>
+            <strong>Monthly Tracked Visitors (MTVs)</strong> represents the number of unique individuals who visit your website or digital property during a given month.
+          </p>
+          <ul className="mt-2 list-disc ml-6 text-gray-700">
+            <li>
+              Each visitor is counted once based on first-party cookies, regardless of how many times they return in the month.
+            </li>
+            <li>
+              MTVs include anonymous visitors, prospects, and users before they have signed up.
+            </li>
+            <li>
+              Bot or non-human traffic is automatically filtered out to ensure accurate reporting.
+            </li>
+          </ul>
+          <p className="mt-2">
+            This metric is ideal for tracking acquisition and the reach of your marketing campaigns.
+          </p>
+        </>
+      ),
+    },
+    mtu: {
+      title: 'How Are Monthly Tracked Users (MTUs) Calculated?',
+      description: (
+        <>
+          <p>
+            <strong>Monthly Tracked Users (MTUs)</strong> measures unique active product users identified by a persistent user ID (such as email or internal user ID) who interact with your product in a given month.
+          </p>
+          <ul className="mt-2 list-disc ml-6 text-gray-700">
+            <li>
+              Each logged-in or uniquely identified user is counted only once per month, even if they log in from multiple devices.
+            </li>
+            <li>
+              MTUs capture actual product engagement and adoption, helping you understand your active user base.
+            </li>
+            <li>
+              Inactive, dormant, or churned users are excluded from the MTU count.
+            </li>
+          </ul>
+          <p className="mt-2">
+            Use this metric to manage feature adoption, retention, and true customer growth.
+          </p>
+        </>
+      ),
+    }
+  };
+
   const renderSlider = () => {
     if (!isSelected || product.pricingType === 'free') return null;
 
@@ -80,6 +142,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         const currentMtuValue = product.id === 'marketing' ? marketingMtuValue : productMtuValue;
         const handleMtuChange = product.id === 'marketing' ? onMarketingMtuChange : onProductMtuChange;
         const label = product.id === 'marketing' ? 'Monthly Tracked Visitors' : 'Monthly Tracked Users';
+        const learnMoreKind = product.id === 'marketing' ? 'mtv' : 'mtu';
         return (
           <div className="space-y-2">
             <CustomSlider
@@ -126,14 +189,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             )}
             <div className="flex items-center space-x-2 text-xs text-blue-600 mt-1">
               <ExternalLink size={12} />
-              <a 
-                href="#" 
-                onClick={(e) => e.preventDefault()}
-                className="hover:underline"
+              <button
+                type="button"
+                className="hover:underline focus:outline-none"
+                onClick={() => handleLearnMoreClick(learnMoreKind)}
               >
                 Learn more about how {product.id === 'marketing' ? 'MTVs' : 'MTUs'} are calculated
-              </a>
+              </button>
             </div>
+            <LearnMoreModal
+              open={modalOpen && (!!modalType)}
+              onOpenChange={setModalOpen}
+              title={modalType ? learnMoreContent[modalType].title : ''}
+              description={modalType ? learnMoreContent[modalType].description : ''}
+            />
           </div>
         );
       case 'seat':
