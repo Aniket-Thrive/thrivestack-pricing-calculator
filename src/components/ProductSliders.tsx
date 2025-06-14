@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ExternalLink } from 'lucide-react';
 import { ProductConfig } from './PricingCalculator';
@@ -6,6 +5,7 @@ import { formatPrice, formatNumber, Currency } from '../utils/pricingEngine';
 import { CustomSlider } from './CustomSlider';
 import { AbuseDetectionAddon } from './AbuseDetectionAddon';
 import { LearnMoreModal } from './LearnMoreModal';
+import { VisitorToUserAnimation } from './VisitorToUserAnimation';
 
 interface ProductSlidersProps {
   product: ProductConfig;
@@ -90,7 +90,14 @@ export const ProductSliders: React.FC<ProductSlidersProps> = ({
             <li>
               Inactive, dormant, or churned users are excluded from the MTU count.
             </li>
+            <li>
+              Eventually, all <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">visitor_ids</code> get mapped to <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">user_ids</code> as users continue to use the same browsers to access your product. Multiple <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">visitor_ids</code> from different browsers get mapped to a single <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">user_id</code>.
+            </li>
           </ul>
+          <div className="mt-4">
+            <h4 className="font-semibold text-sm mb-2">Visitor to User Mapping Timeline:</h4>
+            <VisitorToUserAnimation />
+          </div>
           <p className="mt-2">
             Use this metric to manage feature adoption, retention, and true customer growth.
           </p>
