@@ -1,8 +1,8 @@
+
 import React from "react";
 import {
   Monitor,
   Chrome,
-  ArrowRight,
   User,
   Target,
   Clock,
@@ -10,10 +10,9 @@ import {
 } from "lucide-react";
 
 interface VisitorToUserAnimationProps {
-  variant?: "mtu" | "mtv"; // Only mtv will be rendered for timeline in this format
+  variant?: "mtu" | "mtv";
 }
 
-// Helper for colored icon backgrounds
 function IconCircle({
   icon: Icon,
   color,
@@ -38,7 +37,6 @@ function IconCircle({
 export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
   variant = "mtv",
 }) => {
-  // Only use the timeline for MTV variant
   const timelineItems =
     variant === "mtv"
       ? [
@@ -125,38 +123,40 @@ export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
           },
         ];
 
-  // No heading or description for MTV; text now handled in left column of modal!
+  // No border and panel, just remove the panel classes.
   return (
     <div className="flex flex-col gap-8 w-full">
       <div className="w-full">
-        <div className="bg-white border border-gray-200 rounded-lg px-4 py-4 shadow-sm animate-fade-in w-full">
-          <ol className="relative border-l border-gray-300">
-            {timelineItems.map((item, idx) => (
-              <li className="mb-8 ml-6 last:mb-0" key={item.day + item.tag}>
-                <span className="absolute -left-4 flex items-center">
-                  <IconCircle icon={item.icon} color={item.color} />
-                </span>
-                <div>
+        <ol className="relative border-l border-gray-300">
+          {timelineItems.map((item, idx) => (
+            <li className="mb-8 ml-6 last:mb-0" key={item.day + item.tag}>
+              <span className="absolute -left-4 flex items-center">
+                <IconCircle icon={item.icon} color={item.color} />
+              </span>
+              <div>
+                {/*  Header line: Day, visitor_id (if present), Touchpoint tag to right */}
+                <div className="flex items-center justify-between w-full">
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-semibold text-gray-900">{item.day}</span>
-                    {item.tag && (
-                      <span className="ml-2 text-[11px] px-2 py-0.5 rounded bg-gray-100 text-blue-700 border border-blue-100 font-semibold">
-                        {item.tag}
-                      </span>
+                    {item.id && (
+                      <span className="text-xs text-gray-400 ml-2">{item.id}</span>
                     )}
                   </div>
-                  <div className="mt-0.5 text-xs text-gray-700">
-                    {item.title}
-                  </div>
-                  {item.id && (
-                    <span className="text-xs text-gray-400"> {item.id}</span>
+                  {item.tag && (
+                    <span className="ml-2 text-[11px] px-2 py-0.5 rounded bg-gray-100 text-blue-700 border border-blue-100 font-semibold">
+                      {item.tag}
+                    </span>
                   )}
-                  {item.extra}
                 </div>
-              </li>
-            ))}
-          </ol>
-        </div>
+                {/* Only one content line for title */}
+                <div className="mt-0.5 text-xs text-gray-700">
+                  {item.title}
+                </div>
+                {item.extra}
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
     </div>
   );
