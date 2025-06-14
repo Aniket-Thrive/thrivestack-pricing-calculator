@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ExternalLink } from 'lucide-react';
 import { ProductConfig } from './PricingCalculator';
@@ -60,7 +61,7 @@ export const ProductSliders: React.FC<ProductSlidersProps> = ({
           </p>
           <ul className="mt-2 list-disc ml-6 text-gray-700">
             <li>
-              Each visitor is counted once using device fingerprinting technology that combines device and browser IDs to create a unique <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">visitor_id</code>, which remains consistent across different browsers on the same device and even in incognito mode.
+              Each visitor is counted once using device fingerprinting technology that combines device and browser IDs to create a unique <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">visitor_id</code>, which differs on different browsers and remains consistent on the browser across sessions and even in private/incognito mode.
             </li>
             <li>
               MTVs include anonymous visitors, prospects, and users before they have signed up.
