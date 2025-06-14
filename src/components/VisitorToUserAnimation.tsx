@@ -1,124 +1,185 @@
 
-import React from 'react';
-import { Monitor, Smartphone, User, Clock, Target, Calendar } from 'lucide-react';
+import React from "react";
+import {
+  Monitor,
+  Chrome,
+  ArrowRight,
+  User,
+  Target,
+  Clock,
+  Users,
+} from "lucide-react";
 
 interface VisitorToUserAnimationProps {
-  variant?: 'mtu' | 'mtv';
+  variant?: "mtu" | "mtv"; // Only mtv will be rendered for timeline in this format
 }
 
-export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({ variant = 'mtu' }) => {
-  const timelineSteps = variant === 'mtv' ? [
-    {
-      day: 'Day 1',
-      icon: Monitor,
-      action: 'Visitor arrives from Chrome browser',
-      detail: 'Touchpoint #1',
-      color: 'blue'
-    },
-    {
-      day: 'Day 3',
-      icon: Smartphone,
-      action: 'Same visitor returns via Safari browser',
-      detail: 'Touchpoint #2',
-      color: 'green'
-    },
-    {
-      day: 'Day 5',
-      icon: User,
-      action: 'Visitor signs up and gets a user_id',
-      detail: 'Time to Conversion: 5 days',
-      color: 'purple'
-    },
-    {
-      day: 'Result',
-      icon: Target,
-      action: 'Conversion metrics tracked automatically',
-      detail: '2 touchpoints, 5 days to conversion',
-      color: 'orange'
-    }
-  ] : [
-    {
-      day: 'Day 1',
-      icon: Monitor,
-      action: 'User visits from Chrome browser',
-      detail: 'visitor_id_chrome created',
-      color: 'blue'
-    },
-    {
-      day: 'Day 3',
-      icon: Smartphone,
-      action: 'Same user visits from Safari browser',
-      detail: 'visitor_id_safari created',
-      color: 'green'
-    },
-    {
-      day: 'Day 5',
-      icon: User,
-      action: 'User signs up and gets a user_id',
-      detail: 'user_id_12345 assigned',
-      color: 'purple'
-    },
-    {
-      day: 'Result',
-      icon: Target,
-      action: 'Multiple visitor_ids mapped to one user_id',
-      detail: 'Complete user journey tracked',
-      color: 'orange'
-    }
-  ];
+// Helper for colored icon backgrounds
+function IconCircle({
+  icon: Icon,
+  color,
+}: {
+  icon: typeof Chrome;
+  color: string;
+}) {
+  const bg = {
+    blue: "bg-blue-100 border-blue-300 text-blue-600",
+    green: "bg-green-100 border-green-300 text-green-600",
+    orange: "bg-orange-100 border-orange-300 text-orange-600",
+    purple: "bg-purple-100 border-purple-300 text-purple-600",
+    gray: "bg-gray-100 border-gray-300 text-gray-500",
+  }[color];
+  return (
+    <span className={`p-2 rounded-full border ${bg}`}>
+      <Icon size={18} />
+    </span>
+  );
+}
+
+export const VisitorToUserAnimation: React.FC<VisitorToUserAnimationProps> = ({
+  variant = "mtv",
+}) => {
+  // Only use the detailed timeline for MTV variant (per requirements)
+  const timelineItems =
+    variant === "mtv"
+      ? [
+          {
+            day: "Day 1",
+            tag: "Touchpoint #1",
+            title:
+              "Visitor arrives from Chrome browser",
+            id: "visitor_id_123",
+            icon: Chrome,
+            color: "blue",
+          },
+          {
+            day: "Day 3",
+            tag: "Touchpoint #2",
+            title: "Same visitor returns Chrome incognito browser",
+            id: "visitor_id_123",
+            icon: Chrome,
+            color: "blue",
+          },
+          {
+            day: "Day 5",
+            tag: "Touchpoint #3",
+            title: "Same visitor returns Safari browser",
+            id: "visitor_id_345",
+            icon: Monitor,
+            color: "green",
+          },
+          {
+            day: "Day 24",
+            tag: "Touchpoint #4",
+            title: "Same visitor returns Chrome browser",
+            id: "visitor_id_123",
+            icon: Chrome,
+            color: "blue",
+          },
+          {
+            day: "Day 51",
+            tag: "Converted",
+            title: "visitor_id_123 signs up and gets a user_id_123",
+            icon: User,
+            color: "purple",
+            extra: (
+              <div className="space-y-1 pl-2">
+                <div className="flex items-center gap-1">
+                  <Target size={14} className="text-orange-600 mr-1" />
+                  <span className="text-xs text-gray-700">
+                    Conversion metrics tracked automatically for visitor_id_123
+                  </span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <Clock size={13} className="text-orange-600 mr-1" />
+                  <span className="text-xs text-green-700 font-semibold">
+                    ✓ 3 touchpoints, 51 days to conversion
+                  </span>
+                </div>
+              </div>
+            ),
+          },
+          {
+            day: "Day 62",
+            tag: "Multiple Visitor IDs mapped to same User_ID",
+            title: "visitor_id_345 uses Safari browser and signs_in with User_Id_123",
+            icon: Users,
+            color: "orange",
+            extra: (
+              <div className="space-y-1 pl-2">
+                <span className="block text-xs text-gray-700">
+                  visitor_id_123 and visitor_id_345 mapped to user_id_123
+                </span>
+                <span className="block text-xs text-green-700 font-semibold">
+                  ✓ 4 touchpoints, 51 days to conversion
+                </span>
+              </div>
+            ),
+          },
+        ]
+      : [
+          // Basic fallback for MTU, preserving old code/behavior
+          {
+            day: "MTU event",
+            tag: "",
+            title: "User mapping occurs—see docs for details.",
+            icon: User,
+            color: "gray",
+          },
+        ];
 
   return (
-    <div className="bg-gray-50 p-4 rounded-lg border">
-      <div className="text-xs text-gray-600 mb-4 font-medium flex items-center">
-        <Calendar size={14} className="mr-2" />
-        {variant === 'mtv' ? 'Conversion Tracking Timeline' : 'User Mapping Timeline'}
+    <div className="flex flex-col sm:flex-row gap-6 sm:items-start">
+      <div className="flex-1">
+        {variant === "mtv" && (
+          <div>
+            <h4 className="font-semibold text-sm mb-2">
+              Conversion Tracking Timeline:
+            </h4>
+            <p className="text-xs text-gray-600 mb-3">
+              We use <b>touchpoints</b> and the <b>time taken</b> to associate a <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">visitor_id</code> and <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">user_id</code> as core criteria for conversion, automatically calculating <b>Time to Conversion</b> and <b>Touchpoints to Conversion</b> metrics.
+            </p>
+          </div>
+        )}
+        {variant !== "mtv" && (
+          <div>
+            <h4 className="font-semibold text-sm mb-2">User Mapping Timeline:</h4>
+            <p className="text-xs text-gray-600 mb-3">
+              Each logged-in user is tracked across browsers and devices, mapping multiple <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">visitor_ids</code> to a single <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">user_id</code>.
+            </p>
+          </div>
+        )}
       </div>
-      
-      <div className="space-y-3">
-        {timelineSteps.map((step, index) => {
-          const Icon = step.icon;
-          return (
-            <div key={index} className="flex items-start space-x-3">
-              <div className="flex flex-col items-center">
-                <div className={`p-2 rounded-full bg-${step.color}-100 border border-${step.color}-300`}>
-                  <Icon size={16} className={`text-${step.color}-600`} />
-                </div>
-                {index < timelineSteps.length - 1 && (
-                  <div className="w-0.5 h-6 bg-gray-300 mt-2"></div>
-                )}
-              </div>
-              
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center space-x-2 mb-1">
-                  <span className="text-xs font-semibold text-gray-900">{step.day}</span>
-                  {variant === 'mtv' && (step.day === 'Day 1' || step.day === 'Day 3') && (
-                    <div className="flex items-center space-x-1">
-                      <Target size={10} className={`text-${step.color}-600`} />
-                      <span className="text-xs text-gray-600">{step.detail}</span>
-                    </div>
-                  )}
-                  {variant === 'mtv' && step.day === 'Day 5' && (
-                    <div className="flex items-center space-x-1">
-                      <Clock size={10} className={`text-${step.color}-600`} />
-                      <span className="text-xs text-gray-600">{step.detail}</span>
-                    </div>
-                  )}
-                </div>
-                <p className="text-xs text-gray-700">{step.action}</p>
-                {variant === 'mtu' && (
-                  <code className="text-xs text-gray-500 bg-gray-100 px-1 py-0.5 rounded mt-1 inline-block">
-                    {step.detail}
-                  </code>
-                )}
-                {variant === 'mtv' && step.day === 'Result' && (
-                  <div className="text-xs text-gray-600 mt-1 font-medium">
-                    ✓ {step.detail}
+      {/* Timeline */}
+      <div className="flex-1 min-w-[260px] max-w-xs">
+        <div className="bg-white border border-gray-200 rounded-lg px-4 py-4 shadow-sm animate-fade-in">
+          <ol className="relative border-l border-gray-300">
+            {timelineItems.map((item, idx) => (
+              <li className="mb-8 ml-6 last:mb-0" key={item.day + item.tag}>
+                <span className="absolute -left-4 flex items-center">
+                  <IconCircle icon={item.icon} color={item.color} />
+                </span>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-gray-900">{item.day}</span>
+                    {item.tag && (
+                      <span className="ml-2 text-[11px] px-2 py-0.5 rounded bg-gray-100 text-blue-700 border border-blue-100 font-semibold">
+                        {item.tag}
+                      </span>
+                    )}
                   </div>
-                )}
-              </div>
-            </div>
-          );
-        })}
+                  <div className="mt-0.5 text-xs text-gray-700">
+                    {item.title}
+                  </div>
+                  {item.id && (
+                    <span className="text-xs text-gray-400"> {item.id}</span>
+                  )}
+                  {item.extra}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </div>
   );
