@@ -55,9 +55,9 @@ export const ProductSliders: React.FC<ProductSlidersProps> = ({
     mtv: {
       title: "How Are Monthly Tracked Visitors (MTVs) Calculated?",
       description: (
-        // Responsive two-column layout
-        <div className="flex flex-col md:flex-row gap-6">
-          <div className="md:w-1/2 space-y-3">
+        // Responsive two-column layout handled by LearnMoreModal, just pass left/right columns:
+        <>
+          <div className="md:w-1/2 w-full space-y-3 pr-0 lg:pr-8">
             <p>
               <strong>Monthly Tracked Visitors (MTVs)</strong> represents the number of unique individuals who visit your website or digital property during a given month.
             </p>
@@ -76,18 +76,20 @@ export const ProductSliders: React.FC<ProductSlidersProps> = ({
               This metric is ideal for tracking acquisition and the reach of your marketing campaigns.
             </p>
           </div>
-          <div className="md:w-1/2">
-            {/* Timeline / Animation Content */}
-            <VisitorToUserAnimation variant="mtv" />
+          <div className="md:w-1/2 w-full">
+            <div className="w-full md:max-w-[460px] overflow-x-auto">
+              {/* Timeline / Animation */}
+              <VisitorToUserAnimation variant="mtv" />
+            </div>
           </div>
-        </div>
+        </>
       ),
     },
     mtu: {
       title: "How Are Monthly Tracked Users (MTUs) Calculated?",
       description: (
-        <div className="flex flex-col md:flex-row gap-6">
-          <div className="md:w-1/2 space-y-3">
+        <>
+          <div className="md:w-1/2 w-full space-y-3 pr-0 lg:pr-8">
             <p>
               <strong>Monthly Tracked Users (MTUs)</strong> measures unique active product users identified by a unique <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">user_id</code> that gets assigned after they have signed up and are actively using your product in a given month.
             </p>
@@ -109,11 +111,13 @@ export const ProductSliders: React.FC<ProductSlidersProps> = ({
               Use this metric to manage feature adoption, retention, and true customer growth.
             </p>
           </div>
-          <div className="md:w-1/2">
-            {/* Timeline / Animation Content */}
-            <VisitorToUserAnimation variant="mtu" />
+          <div className="md:w-1/2 w-full">
+            <div className="w-full md:max-w-[460px] overflow-x-auto">
+              {/* Timeline / Animation */}
+              <VisitorToUserAnimation variant="mtu" />
+            </div>
           </div>
-        </div>
+        </>
       ),
     },
   };
