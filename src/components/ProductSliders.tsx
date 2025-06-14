@@ -53,64 +53,69 @@ export const ProductSliders: React.FC<ProductSlidersProps> = ({
   // Define modal content for both types
   const learnMoreContent = {
     mtv: {
-      title: 'How Are Monthly Tracked Visitors (MTVs) Calculated?',
+      title: "How Are Monthly Tracked Visitors (MTVs) Calculated?",
       description: (
-        <>
-          <p>
-            <strong>Monthly Tracked Visitors (MTVs)</strong> represents the number of unique individuals who visit your website or digital property during a given month.
-          </p>
-          <ul className="mt-2 list-disc ml-6 text-gray-700">
-            <li>
-              Each visitor is counted once using device fingerprinting technology that combines device and browser IDs to create a unique <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">visitor_id</code>, which differs across browsers but remains consistent within the same browser across sessions and incognito mode.
-            </li>
-            <li>
-              MTVs include anonymous visitors, prospects, and users before they have signed up.
-            </li>
-            <li>
-              We use touchpoints and time taken to associate <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">visitor_ids</code> with <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">user_ids</code> as core criteria for conversion, automatically calculating <strong>Time to Conversion</strong> and <strong>Touchpoints to Conversion</strong> metrics.
-            </li>
-          </ul>
-          <div className="mt-4">
-            <h4 className="font-semibold text-sm mb-2">Visitor to User Conversion Tracking:</h4>
+        // Responsive two-column layout
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="md:w-1/2 space-y-3">
+            <p>
+              <strong>Monthly Tracked Visitors (MTVs)</strong> represents the number of unique individuals who visit your website or digital property during a given month.
+            </p>
+            <ul className="mt-2 list-disc ml-6 text-gray-700">
+              <li>
+                Each visitor is counted once using device fingerprinting technology that combines device and browser IDs to create a unique <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">visitor_id</code>, which differs across browsers but remains consistent within the same browser across sessions and incognito mode.
+              </li>
+              <li>
+                MTVs include anonymous visitors, prospects, and users before they have signed up.
+              </li>
+              <li>
+                We use touchpoints and time taken to associate <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">visitor_ids</code> with <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">user_ids</code> as core criteria for conversion, automatically calculating <strong>Time to Conversion</strong> and <strong>Touchpoints to Conversion</strong> metrics.
+              </li>
+            </ul>
+            <p className="mt-2">
+              This metric is ideal for tracking acquisition and the reach of your marketing campaigns.
+            </p>
+          </div>
+          <div className="md:w-1/2">
+            {/* Timeline / Animation Content */}
             <VisitorToUserAnimation variant="mtv" />
           </div>
-          <p className="mt-2">
-            This metric is ideal for tracking acquisition and the reach of your marketing campaigns.
-          </p>
-        </>
+        </div>
       ),
     },
     mtu: {
-      title: 'How Are Monthly Tracked Users (MTUs) Calculated?',
+      title: "How Are Monthly Tracked Users (MTUs) Calculated?",
       description: (
-        <>
-          <p>
-            <strong>Monthly Tracked Users (MTUs)</strong> measures unique active product users identified by a unique <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">user_id</code> that gets assigned after they have signed up and are actively using your product in a given month.
-          </p>
-          <ul className="mt-2 list-disc ml-6 text-gray-700">
-            <li>
-              Each logged-in user with a unique <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">user_id</code> is counted only once per month, even if they log in from multiple devices or sessions.
-            </li>
-            <li>
-              MTUs capture actual product engagement and adoption, helping you understand your active user base.
-            </li>
-            <li>
-              Inactive, dormant, or churned users are excluded from the MTU count.
-            </li>
-            <li>
-              Eventually, all <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">visitor_ids</code> get mapped to <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">user_ids</code> as users continue to use the same browsers to access your product. Multiple <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">visitor_ids</code> from different browsers get mapped to a single <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">user_id</code>.
-            </li>
-          </ul>
-          <div className="mt-4">
-            <h4 className="font-semibold text-sm mb-2">Visitor to User Mapping Timeline:</h4>
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="md:w-1/2 space-y-3">
+            <p>
+              <strong>Monthly Tracked Users (MTUs)</strong> measures unique active product users identified by a unique <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">user_id</code> that gets assigned after they have signed up and are actively using your product in a given month.
+            </p>
+            <ul className="mt-2 list-disc ml-6 text-gray-700">
+              <li>
+                Each logged-in user with a unique <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">user_id</code> is counted only once per month, even if they log in from multiple devices or sessions.
+              </li>
+              <li>
+                MTUs capture actual product engagement and adoption, helping you understand your active user base.
+              </li>
+              <li>
+                Inactive, dormant, or churned users are excluded from the MTU count.
+              </li>
+              <li>
+                Eventually, all <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">visitor_ids</code> get mapped to <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">user_ids</code> as users continue to use the same browsers to access your product. Multiple <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">visitor_ids</code> from different browsers get mapped to a single <code className="bg-gray-100 px-1 py-0.5 rounded text-sm font-mono">user_id</code>.
+              </li>
+            </ul>
+            <p className="mt-2">
+              Use this metric to manage feature adoption, retention, and true customer growth.
+            </p>
+          </div>
+          <div className="md:w-1/2">
+            {/* Timeline / Animation Content */}
             <VisitorToUserAnimation variant="mtu" />
           </div>
-          <p className="mt-2">
-            Use this metric to manage feature adoption, retention, and true customer growth.
-          </p>
-        </>
+        </div>
       ),
-    }
+    },
   };
 
   if (!isSelected || product.pricingType === 'free') return null;
