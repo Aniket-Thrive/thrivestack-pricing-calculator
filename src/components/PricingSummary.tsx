@@ -12,6 +12,7 @@ interface PricingSummaryProps {
   productMtuValue: number;
   seatValue: number;
   arrValue: number;
+  abuseDetectionValue?: number;
   currency: Currency;
   isAnnual: boolean;
   onAnnualToggle: (isAnnual: boolean) => void;
@@ -27,6 +28,7 @@ export const PricingSummary: React.FC<PricingSummaryProps> = ({
   productMtuValue,
   seatValue,
   arrValue,
+  abuseDetectionValue = 500,
   currency,
   isAnnual,
   onAnnualToggle
@@ -132,6 +134,7 @@ export const PricingSummary: React.FC<PricingSummaryProps> = ({
                         {product.pricingType === 'mtu' && product.id === 'product' && `${(productMtuValue / 1000).toFixed(0)}K MTUs`}
                         {product.pricingType === 'seat' && `${seatValue} seats`}
                         {product.pricingType === 'arr' && `${formatPrice(arrValue, currency)} ARR`}
+                        {product.pricingType === 'abuse' && `${abuseDetectionValue} detections`}
                         {product.pricingType === 'free' && 'Included'}
                       </div>
                     </div>

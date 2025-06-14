@@ -10,7 +10,7 @@ export interface ProductConfig {
   tag?: string;
   description: string;
   features: string[];
-  pricingType: 'mtu' | 'seat' | 'arr' | 'free';
+  pricingType: 'mtu' | 'seat' | 'arr' | 'free' | 'abuse';
   dependencies?: string[];
   autoAdd?: boolean;
 }
@@ -48,6 +48,21 @@ const products: ProductConfig[] = [
       '**Trial vs. Paid Behavior** – Compare engagement between free users and converted paying customers',
       '**Cohort-Based Engagement** – Segment users based on behavior patterns to drive product growth',
       '**Growth Leaks and Drivers** – Identify drop-off points and friction in your product experience'
+    ]
+  },
+  {
+    id: 'abuse-detection',
+    name: 'Abuse Detection',
+    tag: 'Add-On',
+    description: 'Flags suspicious signups (e.g., disposable emails, unusual behavior) to prevent fake accounts and maintain growth quality.',
+    pricingType: 'abuse',
+    dependencies: ['marketing'],
+    features: [
+      '**500 detections/mo included** for $25/mo',
+      '**$0.02** per additional detection',
+      'Real-time flagging of suspicious signups and behaviors',
+      'Protects marketing funnels from fake or abusive activity',
+      'Improve user quality and prevent wasted growth spend'
     ]
   },
   {
@@ -106,6 +121,7 @@ export const PricingCalculator: React.FC = () => {
   const [productMtuValue, setProductMtuValue] = useState(1000);
   const [seatValue, setSeatValue] = useState(5);
   const [arrValue, setArrValue] = useState(100000);
+  const [abuseDetectionValue, setAbuseDetectionValue] = useState(500);
   const [currency, setCurrency] = useState<Currency>('USD');
   const [isAnnual, setIsAnnual] = useState(false);
 
@@ -170,6 +186,12 @@ export const PricingCalculator: React.FC = () => {
       case 'arr':
         basePrice = calculateARRPrice(arrValue, currency);
         break;
+      case 'abuse':
+        // $25/mo for up to 500 detections, then $0.02 per detection above that
+        const included = 500;
+        if (abuseDetectionValue <= included) basePrice = 25;
+        else basePrice = 25 + (abuseDetectionValue - included) * 0.02;
+        break;
       case 'free':
         return 0;
       default:
@@ -213,6 +235,8 @@ export const PricingCalculator: React.FC = () => {
               productMtuValue={productMtuValue}
               seatValue={seatValue}
               arrValue={arrValue}
+              abuseDetectionValue={abuseDetectionValue}
+              onAbuseDetectionChange={setAbuseDetectionValue}
               onMarketingMtuChange={setMarketingMtuValue}
               onProductMtuChange={setProductMtuValue}
               onSeatChange={setSeatValue}
@@ -239,6 +263,7 @@ export const PricingCalculator: React.FC = () => {
             productMtuValue={productMtuValue}
             seatValue={seatValue}
             arrValue={arrValue}
+            abuseDetectionValue={abuseDetectionValue}
             currency={currency}
             isAnnual={isAnnual}
             onAnnualToggle={setIsAnnual}

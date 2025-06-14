@@ -13,6 +13,8 @@ interface ProductCardProps {
   productMtuValue: number;
   seatValue: number;
   arrValue: number;
+  abuseDetectionValue?: number;
+  onAbuseDetectionChange?: (value: number) => void;
   onMarketingMtuChange: (value: number) => void;
   onProductMtuChange: (value: number) => void;
   onSeatChange: (value: number) => void;
@@ -31,6 +33,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   productMtuValue,
   seatValue,
   arrValue,
+  abuseDetectionValue = 500,
+  onAbuseDetectionChange = () => {},
   onMarketingMtuChange,
   onProductMtuChange,
   onSeatChange,
@@ -57,6 +61,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         return `${formatPrice(arrValue, currency)} ARR`;
       case 'free':
         return 'Free';
+      case 'abuse':
+        return `${abuseDetectionValue} detections`;
       default:
         return '';
     }
@@ -115,6 +121,18 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             max={20000000}
             step={10000}
             formatValue={(v) => formatPrice(v, currency)}
+          />
+        );
+      case 'abuse':
+        return (
+          <CustomSlider
+            label="Detections Per Month"
+            value={abuseDetectionValue}
+            onChange={onAbuseDetectionChange}
+            min={100}
+            max={20000}
+            step={10}
+            formatValue={v => v.toLocaleString()}
           />
         );
       default:
