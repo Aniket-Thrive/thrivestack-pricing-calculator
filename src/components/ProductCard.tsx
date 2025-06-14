@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import { ProductConfig } from './PricingCalculator';
 import { formatPrice, formatNumber, Currency } from '../utils/pricingEngine';
 import { CustomSlider } from './CustomSlider';
@@ -45,7 +46,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     switch (product.pricingType) {
       case 'mtu':
         const mtuValue = product.id === 'marketing' ? marketingMtuValue : productMtuValue;
-        return `${formatNumber(mtuValue)} MTUs`;
+        const label = product.id === 'marketing' ? 'MTVs' : 'MTUs';
+        return `${formatNumber(mtuValue)} ${label}`;
       case 'seat':
         return `${seatValue} seats`;
       case 'arr':
@@ -64,16 +66,29 @@ export const ProductCard: React.FC<ProductCardProps> = ({
       case 'mtu':
         const currentMtuValue = product.id === 'marketing' ? marketingMtuValue : productMtuValue;
         const handleMtuChange = product.id === 'marketing' ? onMarketingMtuChange : onProductMtuChange;
+        const label = product.id === 'marketing' ? 'Monthly Tracked Visitors' : 'Monthly Tracked Users';
         return (
-          <CustomSlider
-            label="Monthly Tracked Users"
-            value={currentMtuValue}
-            onChange={handleMtuChange}
-            min={1000}
-            max={1000000}
-            step={1000}
-            formatValue={(v) => formatNumber(v)}
-          />
+          <div className="space-y-2">
+            <CustomSlider
+              label={label}
+              value={currentMtuValue}
+              onChange={handleMtuChange}
+              min={1000}
+              max={1000000}
+              step={1000}
+              formatValue={(v) => formatNumber(v)}
+            />
+            <div className="flex items-center space-x-2 text-xs text-blue-600">
+              <ExternalLink size={12} />
+              <a 
+                href="#" 
+                onClick={(e) => e.preventDefault()}
+                className="hover:underline"
+              >
+                Learn more about how {product.id === 'marketing' ? 'MTVs' : 'MTUs'} are calculated
+              </a>
+            </div>
+          </div>
         );
       case 'seat':
         return (
@@ -135,7 +150,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           />
           <div>
             <div className="flex items-center space-x-2">
-              <h3 className="text-lg font-semibold text-gray-900">{product.name}</h3>
+              <h1 className="text-xl font-bold text-gray-900">{product.name}</h1>
               {product.tag && (
                 <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">
                   {product.tag}
