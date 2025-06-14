@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ExternalLink } from 'lucide-react';
 import { ProductConfig } from './PricingCalculator';
@@ -140,7 +139,7 @@ export const ProductSliders: React.FC<ProductSlidersProps> = ({
     },
   };
 
-  if (!isSelected || product.pricingType === 'free') return null;
+  if (product.pricingType === 'free') return null;
 
   switch (product.pricingType) {
     case 'mtu':
