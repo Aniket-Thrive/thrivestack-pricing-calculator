@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { FeatureItem } from "./FeatureItem";
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "./ui/collapsible";
+import { Collapsible, CollapsibleTrigger } from "./ui/collapsible";
 import { ChevronDown } from "lucide-react";
 
 // Helper function to parse **bold** markdown in a string and return JSX
@@ -39,10 +39,12 @@ export const ProductFeatures: React.FC<ProductFeaturesProps> = ({ features }) =>
   const showCount = 4;
   const hasExtra = features.length > showCount;
 
+  const shownFeatures = open ? features : features.slice(0, showCount);
+
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
       <div className="space-y-2 mt-4">
-        {(open ? features : features.slice(0, showCount)).map((feature, idx) => (
+        {shownFeatures.map((feature, idx) => (
           <FeatureItem key={idx} feature={feature} parseFn={parseBold} />
         ))}
       </div>
@@ -52,7 +54,7 @@ export const ProductFeatures: React.FC<ProductFeaturesProps> = ({ features }) =>
           asChild
         >
           <button type="button">
-            {open ? "Show less" : `Show all features`}
+            {open ? "Show less" : "Show capabilities"}
             <ChevronDown
               className={`ml-1 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
               size={16}
@@ -60,7 +62,7 @@ export const ProductFeatures: React.FC<ProductFeaturesProps> = ({ features }) =>
           </button>
         </CollapsibleTrigger>
       )}
-      {/* Optionally, add spacing below the collapsible */}
     </Collapsible>
   );
 };
+
