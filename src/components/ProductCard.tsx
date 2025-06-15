@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ProductConfig } from './PricingCalculator';
+import { ProductConfig } from '../types/ProductConfig';
 import { formatPrice, formatNumber, Currency } from '../utils/pricingEngine';
 import { ProductSliders } from './ProductSliders';
 import { ProductFeatures } from './ProductFeatures';

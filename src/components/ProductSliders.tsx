@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ProductConfig } from './PricingCalculator';
+import { ProductConfig } from '../types/ProductConfig';
 import { Currency } from '../utils/pricingEngine';
 import { MTUSlider } from './MTUSlider';
 import { SeatSlider } from './SeatSlider';

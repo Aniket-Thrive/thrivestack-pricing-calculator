@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { ProductConfig } from './PricingCalculator';
+import { ProductConfig } from '../types/ProductConfig';
 import { formatPrice, Currency, getMTUTierBreakdown, getSeatTierBreakdown, getARRTierBreakdown } from '../utils/pricingEngine';
 import { BillingToggle } from './BillingToggle';
 import { PricingActions } from './PricingActions';
