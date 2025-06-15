@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ProductConfig } from '../types/ProductConfig';
 import { formatPrice, formatNumber, Currency } from '../utils/pricingEngine';
@@ -104,7 +103,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 </span>
               )}
             </div>
-            <p className="text-sm text-gray-600">{product.description}</p>
+            {/* Add margin-top and improved style to description */}
+            <p className="mt-2 text-base leading-relaxed text-gray-700">{product.description}</p>
             {disabled && product.dependencies && (
               <p className="text-xs text-orange-600 mt-1">
                 Requires: {product.dependencies.map(dep => 
