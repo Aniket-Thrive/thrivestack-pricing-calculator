@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { ProductConfig } from './PricingCalculator';
 import { formatPrice, Currency, getMTUTierBreakdown, getSeatTierBreakdown, getARRTierBreakdown } from '../utils/pricingEngine';
+import { BillingToggle } from './BillingToggle';
+import { PricingActions } from './PricingActions';
 
 interface PricingSummaryProps {
   selectedProducts: string[];
@@ -39,41 +41,6 @@ export const PricingSummary: React.FC<PricingSummaryProps> = ({
   const [showDetails, setShowDetails] = useState(false);
   const selectedProductDetails = products.filter(p => selectedProducts.includes(p.id));
 
-  const handleStartTrial = () => {
-    window.open('https://app.thrivestack.ai/', '_blank');
-  };
-
-  const handleTalkToSales = () => {
-    window.open('https://app.thrivestack.ai/', '_blank');
-  };
-
-  const handleExportEstimate = () => {
-    const estimate = {
-      products: selectedProductDetails.map(p => ({
-        name: p.name,
-        price: calculatePrice(p)
-      })),
-      configuration: {
-        marketingMtus: marketingMtuValue,
-        productMtus: productMtuValue,
-        seats: seatValue,
-        arr: arrValue,
-        currency,
-        isAnnual
-      },
-      total: totalPrice,
-      isEnterprise
-    };
-    
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(estimate, null, 2));
-    const downloadAnchorNode = document.createElement('a');
-    downloadAnchorNode.setAttribute("href", dataStr);
-    downloadAnchorNode.setAttribute("download", "thrivestack-estimate.json");
-    document.body.appendChild(downloadAnchorNode);
-    downloadAnchorNode.click();
-    downloadAnchorNode.remove();
-  };
-
   const getTierBreakdown = (product: ProductConfig) => {
     switch (product.pricingType) {
       case 'mtu':
@@ -92,40 +59,13 @@ export const PricingSummary: React.FC<PricingSummaryProps> = ({
     <div className="bg-white border border-gray-200 rounded-lg p-6 sticky top-6 shadow-lg max-h-screen overflow-y-auto">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Pricing Summary</h3>
       
-      {/* Annual/Monthly Toggle */}
-      <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-        <div className="flex items-center justify-between">
-          <span className="text-sm font-medium text-gray-700">Billing Cycle</span>
-          <div className="flex items-center space-x-3">
-            <span className={`text-sm ${!isAnnual ? 'font-semibold text-gray-900' : 'text-gray-500'}`}>
-              Monthly
-            </span>
-            <button
-              onClick={() => onAnnualToggle(!isAnnual)}
-              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                isAnnual ? 'bg-blue-600' : 'bg-gray-200'
-              }`}
-            >
-              <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                  isAnnual ? 'translate-x-6' : 'translate-x-1'
-                }`}
-              />
-            </button>
-            <span className={`text-sm ${isAnnual ? 'font-semibold text-gray-900' : 'text-gray-500'}`}>
-              Annual
-              {isAnnual && <span className="text-green-600 ml-1">(-20%)</span>}
-            </span>
-          </div>
-        </div>
-      </div>
+      <BillingToggle isAnnual={isAnnual} onToggle={onAnnualToggle} />
       
       {selectedProducts.length === 0 ? (
         <p className="text-gray-500 text-sm">Select products to see pricing</p>
       ) : (
         <>
           <div className="space-y-3 mb-6">
-            {/* Product-level pricing rows */}
             {products.filter(product=>selectedProducts.includes(product.id)).map(product => {
               const monthlyPrice = calculatePrice(product);
               const displayPrice = isAnnual ? monthlyPrice * 12 : monthlyPrice;
@@ -204,37 +144,7 @@ export const PricingSummary: React.FC<PricingSummaryProps> = ({
             )}
           </div>
 
-          <div className="space-y-3">
-            {isEnterprise ? (
-              <button
-                onClick={handleTalkToSales}
-                className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-              >
-                Talk to Sales
-              </button>
-            ) : (
-              <button
-                onClick={handleStartTrial}
-                className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-              >
-                Start 14-Day Trial
-              </button>
-            )}
-            
-            <button
-              onClick={handleTalkToSales}
-              className="w-full bg-gray-600 text-white py-2 px-4 rounded-lg font-medium hover:bg-gray-700 transition-colors"
-            >
-              Talk to Sales
-            </button>
-            
-            <button
-              onClick={handleExportEstimate}
-              className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg font-medium hover:bg-gray-200 transition-colors"
-            >
-              Export Estimate
-            </button>
-          </div>
+          <PricingActions isEnterprise={isEnterprise} />
 
           {isEnterprise && (
             <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
