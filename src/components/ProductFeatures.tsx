@@ -1,8 +1,7 @@
 
-import React, { useState } from "react";
+import React from "react";
 import { FeatureItem } from "./FeatureItem";
-import { Collapsible, CollapsibleTrigger } from "./ui/collapsible";
-import { ChevronDown } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
 
 // Helper function to parse **bold** markdown in a string and return JSX
 function parseBold(text: string): React.ReactNode {
@@ -34,36 +33,22 @@ interface ProductFeaturesProps {
 }
 
 export const ProductFeatures: React.FC<ProductFeaturesProps> = ({ features }) => {
-  const [open, setOpen] = useState(false);
-
-  const hideCount = 4;
-  const hasHidden = features.length > hideCount;
-
-  // In collapsed state, show features starting from index 4 (hide first 4)
-  // In expanded state, show all features
-  const shownFeatures = open ? features : features.slice(hideCount);
-
   return (
-    <Collapsible open={open} onOpenChange={setOpen}>
-      <div className="space-y-2 mt-4">
-        {shownFeatures.map((feature, idx) => (
-          <FeatureItem key={open ? idx : idx + hideCount} feature={feature} parseFn={parseBold} />
-        ))}
-      </div>
-      {hasHidden && (
-        <CollapsibleTrigger
-          className="mt-2 flex items-center text-sm text-blue-600 hover:underline gap-1 cursor-pointer"
-          asChild
-        >
-          <button type="button">
-            {open ? "Show less" : "Show capabilities"}
-            <ChevronDown
-              className={`ml-1 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-              size={16}
-            />
-          </button>
-        </CollapsibleTrigger>
-      )}
-    </Collapsible>
+    <div className="mt-4">
+      <Accordion type="single" collapsible>
+        <AccordionItem value="capabilities">
+          <AccordionTrigger className="text-sm text-blue-600 hover:underline">
+            Show capabilities
+          </AccordionTrigger>
+          <AccordionContent>
+            <div className="space-y-2">
+              {features.map((feature, idx) => (
+                <FeatureItem key={idx} feature={feature} parseFn={parseBold} />
+              ))}
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </div>
   );
 };
