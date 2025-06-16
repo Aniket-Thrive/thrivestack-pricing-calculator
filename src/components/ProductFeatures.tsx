@@ -36,19 +36,21 @@ interface ProductFeaturesProps {
 export const ProductFeatures: React.FC<ProductFeaturesProps> = ({ features }) => {
   const [open, setOpen] = useState(false);
 
-  const showCount = 4;
-  const hasExtra = features.length > showCount;
+  const hideCount = 4;
+  const hasHidden = features.length > hideCount;
 
-  const shownFeatures = open ? features : features.slice(0, showCount);
+  // In collapsed state, show features starting from index 4 (hide first 4)
+  // In expanded state, show all features
+  const shownFeatures = open ? features : features.slice(hideCount);
 
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
       <div className="space-y-2 mt-4">
         {shownFeatures.map((feature, idx) => (
-          <FeatureItem key={idx} feature={feature} parseFn={parseBold} />
+          <FeatureItem key={open ? idx : idx + hideCount} feature={feature} parseFn={parseBold} />
         ))}
       </div>
-      {hasExtra && (
+      {hasHidden && (
         <CollapsibleTrigger
           className="mt-2 flex items-center text-sm text-blue-600 hover:underline gap-1 cursor-pointer"
           asChild
@@ -65,4 +67,3 @@ export const ProductFeatures: React.FC<ProductFeaturesProps> = ({ features }) =>
     </Collapsible>
   );
 };
-

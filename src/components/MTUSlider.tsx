@@ -58,6 +58,13 @@ export const MTUSlider: React.FC<MTUSlidersProps> = ({
                 We use touchpoints and time taken to associate <code className="bg-gray-700 px-1 py-0.5 rounded text-xs font-mono">visitor_ids</code> with <code className="bg-gray-700 px-1 py-0.5 rounded text-xs font-mono">user_ids</code> as core criteria for conversion, automatically calculating <strong>Time to Conversion</strong> and <strong>Touchpoints to Conversion</strong> metrics.
               </li>
             </ul>
+            <div className="mt-4 bg-gray-700 p-3 rounded text-sm">
+              <h5 className="font-semibold mb-2">MTV Calculation Example:</h5>
+              <ul className="text-gray-200 space-y-1">
+                <li>• Day 51: 2 separate Visitors</li>
+                <li>• Day 62: 1 single Visitor, 1 User</li>
+              </ul>
+            </div>
             <p className="mt-2 text-sm">
               This metric is ideal for tracking acquisition and the reach of your marketing campaigns.
             </p>
@@ -144,6 +151,7 @@ export const MTUSlider: React.FC<MTUSlidersProps> = ({
         max={1000000}
         step={1000}
         formatValue={(v) => formatNumber(v)}
+        useLogarithmicScale={true}
       />
       {/* Abuse Detection as an embedded add-on for marketing */}
       {productId === "marketing" && (

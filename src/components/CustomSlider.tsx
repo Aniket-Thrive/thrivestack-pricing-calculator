@@ -9,6 +9,7 @@ interface CustomSliderProps {
   max: number;
   step: number;
   formatValue: (value: number) => string;
+  useLogarithmicScale?: boolean;
 }
 
 export const CustomSlider: React.FC<CustomSliderProps> = ({
@@ -18,9 +19,46 @@ export const CustomSlider: React.FC<CustomSliderProps> = ({
   min,
   max,
   step,
-  formatValue
+  formatValue,
+  useLogarithmicScale = false
 }) => {
-  const percentage = ((value - min) / (max - min)) * 100;
+  // Helper functions for logarithmic scaling
+  const valueToPosition = (val: number): number => {
+    if (!useLogarithmicScale) {
+      return ((val - min) / (max - min)) * 100;
+    }
+    
+    const logMin = Math.log(min);
+    const logMax = Math.log(max);
+    const logVal = Math.log(val);
+    return ((logVal - logMin) / (logMax - logMin)) * 100;
+  };
+
+  const positionToValue = (position: number): number => {
+    if (!useLogarithmicScale) {
+      return min + (position / 100) * (max - min);
+    }
+    
+    const logMin = Math.log(min);
+    const logMax = Math.log(max);
+    const logVal = logMin + (position / 100) * (logMax - logMin);
+    return Math.exp(logVal);
+  };
+
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const position = Number(e.target.value);
+    const newValue = positionToValue(position);
+    
+    // Round to nearest step for logarithmic scale
+    if (useLogarithmicScale) {
+      const roundedValue = Math.round(newValue / step) * step;
+      onChange(Math.max(min, Math.min(max, roundedValue)));
+    } else {
+      onChange(newValue);
+    }
+  };
+
+  const percentage = valueToPosition(value);
 
   return (
     <div className="mb-6">
@@ -31,11 +69,11 @@ export const CustomSlider: React.FC<CustomSliderProps> = ({
       <div className="relative">
         <input
           type="range"
-          min={min}
-          max={max}
-          step={step}
-          value={value}
-          onChange={(e) => onChange(Number(e.target.value))}
+          min={0}
+          max={100}
+          step={useLogarithmicScale ? 0.1 : (step / (max - min)) * 100}
+          value={percentage}
+          onChange={handleSliderChange}
           className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
           style={{
             background: `linear-gradient(to right, #3B82F6 0%, #3B82F6 ${percentage}%, #E5E7EB ${percentage}%, #E5E7EB 100%)`
