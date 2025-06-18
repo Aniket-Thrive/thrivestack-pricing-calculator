@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ExternalLink } from 'lucide-react';
 import { formatNumber } from '../utils/pricingEngine';
@@ -43,11 +42,11 @@ export const MTUSlider: React.FC<MTUSlidersProps> = ({
       title: "How Are Monthly Tracked Visitors (MTVs) Calculated?",
       description: (
         <>
-          <div className="w-full md:w-[30%] space-y-5 bg-gray-800 text-white p-8 rounded-l-lg">
-            <p>
+          <div className="w-full lg:w-2/5 space-y-4 bg-gray-800 text-white p-6 rounded-lg">
+            <p className="text-sm">
               <strong>Monthly Tracked Visitors (MTVs)</strong> represents the number of unique individuals who visit your website or digital property during a given month.
             </p>
-            <ul className="mt-2 list-disc ml-7 text-gray-200 text-sm space-y-2">
+            <ul className="text-xs text-gray-200 space-y-2 list-disc ml-4">
               <li>
                 Each visitor is counted once using device fingerprinting technology that combines device and browser IDs to create a unique <code className="bg-gray-700 px-1 py-0.5 rounded text-xs font-mono">visitor_id</code>, which differs across browsers but remains consistent within the same browser across sessions and incognito mode.
               </li>
@@ -58,23 +57,23 @@ export const MTUSlider: React.FC<MTUSlidersProps> = ({
                 We use touchpoints and time taken to associate <code className="bg-gray-700 px-1 py-0.5 rounded text-xs font-mono">visitor_ids</code> with <code className="bg-gray-700 px-1 py-0.5 rounded text-xs font-mono">user_ids</code> as core criteria for conversion, automatically calculating <strong>Time to Conversion</strong> and <strong>Touchpoints to Conversion</strong> metrics.
               </li>
             </ul>
-            <div className="mt-4 bg-gray-700 p-3 rounded text-sm">
+            <div className="bg-gray-700 p-3 rounded text-xs">
               <h5 className="font-semibold mb-2">MTV Calculation Example:</h5>
               <ul className="text-gray-200 space-y-1">
                 <li>• Day 51: 2 separate Visitors</li>
                 <li>• Day 62: 1 single Visitor, 1 User</li>
               </ul>
             </div>
-            <p className="mt-2 text-sm">
+            <p className="text-xs">
               This metric is ideal for tracking acquisition and the reach of your marketing campaigns.
             </p>
           </div>
-          <div className="w-full md:w-[70%] bg-gray-50 p-8 rounded-r-lg flex flex-col justify-center">
+          <div className="w-full lg:w-3/5 bg-gray-50 p-6 rounded-lg flex flex-col justify-center">
             <div className="mb-4">
-              <h4 className="font-semibold text-lg mb-2 text-gray-900">
+              <h4 className="font-semibold text-base mb-2 text-gray-900">
                 Conversion Tracking Timeline:
               </h4>
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-xs text-gray-600 mb-4">
                 We use <b>touchpoints</b> and the <b>time taken</b> to associate a <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">visitor_id</code> and <code className="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">user_id</code> as core criteria for conversion, automatically calculating <b>Time to Conversion</b> and <b>Touchpoints to Conversion</b> metrics.
               </p>
             </div>
@@ -89,21 +88,21 @@ export const MTUSlider: React.FC<MTUSlidersProps> = ({
       title: "How Are Monthly Tracked Users (MTUs) Calculated?",
       description: (
         <>
-          <div className="w-full md:w-[30%] space-y-5 bg-gray-800 text-white p-8 rounded-l-lg">
+          <div className="w-full lg:w-2/5 space-y-4 bg-gray-800 text-white p-6 rounded-lg">
             <div>
-              <h4 className="font-semibold text-base mb-1">
+              <h4 className="font-semibold text-sm mb-1">
                 User Mapping Timeline:
               </h4>
-              <p className="text-sm text-gray-200 mb-3">
+              <p className="text-xs text-gray-200 mb-3">
                 Each logged-in user is tracked across browsers and devices, mapping multiple <code className="bg-gray-700 px-1 py-0.5 rounded text-xs font-mono">visitor_ids</code> to a single <code className="bg-gray-700 px-1 py-0.5 rounded text-xs font-mono">user_id</code>.
               </p>
             </div>
-            <p>
-              <strong>Monthly Tracked Users (MTUs)</strong> measures unique active product users identified by a unique <code className="bg-gray-700 px-1 py-0.5 rounded text-sm font-mono">user_id</code> that gets assigned after they have signed up and are actively using your product in a given month.
+            <p className="text-sm">
+              <strong>Monthly Tracked Users (MTUs)</strong> measures unique active product users identified by a unique <code className="bg-gray-700 px-1 py-0.5 rounded text-xs font-mono">user_id</code> that gets assigned after they have signed up and are actively using your product in a given month.
             </p>
-            <ul className="mt-2 list-disc ml-7 text-gray-200 text-sm space-y-2">
+            <ul className="text-xs text-gray-200 space-y-2 list-disc ml-4">
               <li>
-                Each logged-in user with a unique <code className="bg-gray-700 px-1 py-0.5 rounded text-sm font-mono">user_id</code> is counted only once per month, even if they log in from multiple devices or sessions.
+                Each logged-in user with a unique <code className="bg-gray-700 px-1 py-0.5 rounded text-xs font-mono">user_id</code> is counted only once per month, even if they log in from multiple devices or sessions.
               </li>
               <li>
                 MTUs capture actual product engagement and adoption, helping you understand your active user base.
@@ -112,14 +111,14 @@ export const MTUSlider: React.FC<MTUSlidersProps> = ({
                 Inactive, dormant, or churned users are excluded from the MTU count.
               </li>
               <li>
-                Eventually, all <code className="bg-gray-700 px-1 py-0.5 rounded text-sm font-mono">visitor_ids</code> get mapped to <code className="bg-gray-700 px-1 py-0.5 rounded text-sm font-mono">user_ids</code> as users continue to use the same browsers to access your product. Multiple <code className="bg-gray-700 px-1 py-0.5 rounded text-sm font-mono">visitor_ids</code> from different browsers get mapped to a single <code className="bg-gray-700 px-1 py-0.5 rounded text-sm font-mono">user_id</code>.
+                Eventually, all <code className="bg-gray-700 px-1 py-0.5 rounded text-xs font-mono">visitor_ids</code> get mapped to <code className="bg-gray-700 px-1 py-0.5 rounded text-xs font-mono">user_ids</code> as users continue to use the same browsers to access your product. Multiple <code className="bg-gray-700 px-1 py-0.5 rounded text-xs font-mono">visitor_ids</code> from different browsers get mapped to a single <code className="bg-gray-700 px-1 py-0.5 rounded text-xs font-mono">user_id</code>.
               </li>
             </ul>
-            <p className="mt-2 text-sm">
+            <p className="text-xs">
               Use this metric to manage feature adoption, retention, and true customer growth.
             </p>
           </div>
-          <div className="w-full md:w-[70%] bg-gray-50 p-8 rounded-r-lg flex flex-col justify-center items-center">
+          <div className="w-full lg:w-3/5 bg-gray-50 p-6 rounded-lg flex flex-col justify-center items-center">
             <div className="w-full overflow-x-auto">
               <VisitorToUserAnimation variant="mtu" />
             </div>
