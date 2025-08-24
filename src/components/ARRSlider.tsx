@@ -16,7 +16,7 @@ export const ARRSlider: React.FC<ARRSliderProps> = ({ value, onChange, currency 
       value={value}
       onChange={onChange}
       min={0}
-      max={20000000}
+      max={100000000}
       step={10000}
       formatValue={(v) => formatPrice(v, currency)}
     />

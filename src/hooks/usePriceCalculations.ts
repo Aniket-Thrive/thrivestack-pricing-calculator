@@ -61,7 +61,7 @@ export const usePriceCalculations = ({
     return isAnnual ? basePrice * 0.8 : basePrice;
   };
 
-  const isEnterprise = marketingMtuValue > 1000000 || productMtuValue > 1000000 || arrValue > 20000000;
+  const isEnterprise = marketingMtuValue > 1000000 || productMtuValue > 1000000 || arrValue > 100000000;
 
   return {
     calculateProductPrice,

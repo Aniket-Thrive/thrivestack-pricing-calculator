@@ -106,9 +106,9 @@ export const calculateSeatPrice = (seats: number, currency: Currency = 'USD'): n
   
   const paidSeats = seats - 2;
   const tiers = [
-    { min: 1, max: 8, rate: 8 },    // Seats 3-10 (8 paid seats)
-    { min: 9, max: 23, rate: 7 },   // Seats 11-25 (15 paid seats)
-    { min: 24, max: 98, rate: 6 }   // Seats 26-100 (75 paid seats)
+    { min: 1, max: 8, rate: 35 },    // Seats 3-10 (8 paid seats)
+    { min: 9, max: 48, rate: 28 },   // Seats 11-50 (40 paid seats)
+    { min: 49, max: 998, rate: 25 }  // Seats 51+ (unlimited paid seats)
   ];
 
   let totalCost = 0;
@@ -131,9 +131,9 @@ export const getSeatTierBreakdown = (seats: number, currency: Currency = 'USD', 
   
   const paidSeats = seats - 2;
   const tiers = [
-    { min: 1, max: 8, rate: 8, label: 'Seats 3-10' },
-    { min: 9, max: 23, rate: 7, label: 'Seats 11-25' },
-    { min: 24, max: 98, rate: 6, label: 'Seats 26-100' }
+    { min: 1, max: 8, rate: 35, label: 'Seats 3-10' },
+    { min: 9, max: 48, rate: 28, label: 'Seats 11-50' },
+    { min: 49, max: 998, rate: 25, label: 'Seats 51+' }
   ];
 
   const breakdown: TierBreakdown[] = [];
@@ -166,16 +166,18 @@ export const getSeatTierBreakdown = (seats: number, currency: Currency = 'USD', 
 };
 
 export const calculateARRPrice = (arr: number, currency: Currency = 'USD'): number => {
-  if (arr <= 100000) return 0; // First $100K is free
+  if (arr <= 1000000) return 0; // First $1M is free
   
   const tiers = [
-    { min: 100001, max: 1000000, rate: 0.002 },    // 0.2%
-    { min: 1000001, max: 5000000, rate: 0.0015 },  // 0.15%
-    { min: 5000001, max: 20000000, rate: 0.001 }   // 0.1%
+    { min: 1000001, max: 5000000, rate: 0.0012 },   // $1-5M: 0.12%
+    { min: 5000001, max: 10000000, rate: 0.001 },   // $5-10M: 0.10%
+    { min: 10000001, max: 25000000, rate: 0.0008 }, // $10-25M: 0.08%
+    { min: 25000001, max: 50000000, rate: 0.0006 }, // $25-50M: 0.06%
+    { min: 50000001, max: 100000000, rate: 0.0005 } // $50-100M: 0.05%
   ];
 
   let totalCost = 0;
-  let remainingARR = arr - 100000; // Subtract the free tier
+  let remainingARR = arr - 1000000; // Subtract the free tier
 
   for (const tier of tiers) {
     if (remainingARR <= 0) break;
@@ -194,16 +196,18 @@ export const calculateARRPrice = (arr: number, currency: Currency = 'USD'): numb
 };
 
 export const getARRTierBreakdown = (arr: number, currency: Currency = 'USD', isAnnual: boolean = false): TierBreakdown[] => {
-  if (arr <= 100000) return [];
+  if (arr <= 1000000) return [];
   
   const tiers = [
-    { min: 100001, max: 1000000, rate: 0.002, label: '$100K-$1M ARR' },
-    { min: 1000001, max: 5000000, rate: 0.0015, label: '$1M-$5M ARR' },
-    { min: 5000001, max: 20000000, rate: 0.001, label: '$5M-$20M ARR' }
+    { min: 1000001, max: 5000000, rate: 0.0012, label: '$1M-$5M ARR' },
+    { min: 5000001, max: 10000000, rate: 0.001, label: '$5M-$10M ARR' },
+    { min: 10000001, max: 25000000, rate: 0.0008, label: '$10M-$25M ARR' },
+    { min: 25000001, max: 50000000, rate: 0.0006, label: '$25M-$50M ARR' },
+    { min: 50000001, max: 100000000, rate: 0.0005, label: '$50M-$100M ARR' }
   ];
 
   const breakdown: TierBreakdown[] = [];
-  let remainingARR = arr - 100000;
+  let remainingARR = arr - 1000000;
 
   for (const tier of tiers) {
     if (remainingARR <= 0) break;
