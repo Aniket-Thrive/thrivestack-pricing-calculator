@@ -102,9 +102,10 @@ export const getMTUTierBreakdown = (mtus: number, currency: Currency = 'USD', is
 };
 
 export const calculateSeatPrice = (seats: number, currency: Currency = 'USD'): number => {
-  if (seats <= 2) return 0; // First 2 seats are free
+  const roundedSeats = Math.ceil(seats * 10) / 10; // Round up to nearest decimal
+  if (roundedSeats <= 2) return 0; // First 2 seats are free
   
-  const paidSeats = seats - 2;
+  const paidSeats = roundedSeats - 2;
   const tiers = [
     { min: 1, max: 8, rate: 35 },    // Seats 3-10 (8 paid seats)
     { min: 9, max: 48, rate: 28 },   // Seats 11-50 (40 paid seats)
@@ -127,9 +128,10 @@ export const calculateSeatPrice = (seats: number, currency: Currency = 'USD'): n
 };
 
 export const getSeatTierBreakdown = (seats: number, currency: Currency = 'USD', isAnnual: boolean = false): TierBreakdown[] => {
-  if (seats <= 2) return [];
+  const roundedSeats = Math.ceil(seats * 10) / 10; // Round up to nearest decimal
+  if (roundedSeats <= 2) return [];
   
-  const paidSeats = seats - 2;
+  const paidSeats = roundedSeats - 2;
   const tiers = [
     { min: 1, max: 8, rate: 35, label: 'Seats 3-10' },
     { min: 9, max: 48, rate: 28, label: 'Seats 11-50' },

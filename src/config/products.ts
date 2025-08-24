@@ -74,7 +74,6 @@ export const products: ProductConfig[] = [
   {
     id: 'revenue',
     name: 'Revenue Intelligence',
-    tag: 'Coming Soon',
     description: 'Monetization & Growth Intelligence',
     pricingType: 'arr',
     features: [
