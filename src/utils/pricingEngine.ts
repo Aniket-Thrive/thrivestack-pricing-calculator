@@ -33,7 +33,7 @@ export const calculateMTUPrice = (mtus: number, currency: Currency = 'USD'): num
   if (mtus <= 0) return 0;
   
   const tiers = [
-    { min: 1, max: 2000, rate: 49 },
+    { min: 1, max: 2000, rate: 99 },
     { min: 2001, max: 3000, rate: 44.10 },
     { min: 3001, max: 4000, rate: 41.65 },
     { min: 4001, max: 5000, rate: 39.20 },
@@ -63,7 +63,7 @@ export const getMTUTierBreakdown = (mtus: number, currency: Currency = 'USD', is
   if (mtus <= 0) return [];
   
   const tiers = [
-    { min: 1, max: 2000, rate: 49 },
+    { min: 1, max: 2000, rate: 99 },
     { min: 2001, max: 3000, rate: 44.10 },
     { min: 3001, max: 4000, rate: 41.65 },
     { min: 4001, max: 5000, rate: 39.20 },
@@ -102,7 +102,7 @@ export const getMTUTierBreakdown = (mtus: number, currency: Currency = 'USD', is
 };
 
 export const calculateSeatPrice = (seats: number, currency: Currency = 'USD'): number => {
-  const roundedSeats = Math.ceil(seats * 10) / 10; // Round up to nearest decimal
+  const roundedSeats = Math.round(seats); // Round to whole number
   if (roundedSeats <= 2) return 0; // First 2 seats are free
   
   const paidSeats = roundedSeats - 2;
@@ -128,7 +128,7 @@ export const calculateSeatPrice = (seats: number, currency: Currency = 'USD'): n
 };
 
 export const getSeatTierBreakdown = (seats: number, currency: Currency = 'USD', isAnnual: boolean = false): TierBreakdown[] => {
-  const roundedSeats = Math.ceil(seats * 10) / 10; // Round up to nearest decimal
+  const roundedSeats = Math.round(seats); // Round to whole number
   if (roundedSeats <= 2) return [];
   
   const paidSeats = roundedSeats - 2;

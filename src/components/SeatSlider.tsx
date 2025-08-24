@@ -15,8 +15,8 @@ export const SeatSlider: React.FC<SeatSliderProps> = ({ value, onChange }) => {
       onChange={onChange}
       min={1}
       max={100}
-      step={0.1}
-      formatValue={(v) => (Math.ceil(v * 10) / 10).toString()}
+      step={1}
+      formatValue={(v) => Math.round(v).toString()}
     />
   );
 };

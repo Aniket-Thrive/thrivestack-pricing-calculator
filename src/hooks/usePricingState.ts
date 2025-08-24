@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { Currency } from '../utils/pricingEngine';
 
 export const usePricingState = () => {
-  const [marketingMtuValue, setMarketingMtuValue] = useState(1000);
-  const [productMtuValue, setProductMtuValue] = useState(1000);
+  const [marketingMtuValue, setMarketingMtuValue] = useState(2000);
+  const [productMtuValue, setProductMtuValue] = useState(2000);
   const [seatValue, setSeatValue] = useState(5);
   const [arrValue, setArrValue] = useState(100000);
   const [abuseDetectionEnabled, setAbuseDetectionEnabled] = useState(false);

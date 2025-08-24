@@ -146,7 +146,7 @@ export const MTUSlider: React.FC<MTUSlidersProps> = ({
         label={label}
         value={value}
         onChange={onChange}
-        min={1000}
+        min={2000}
         max={1000000}
         step={1000}
         formatValue={(v) => formatNumber(v)}
