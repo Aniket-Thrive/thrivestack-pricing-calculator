@@ -5,6 +5,7 @@ import { PricingSummary } from './PricingSummary';
 import { CurrencySelector } from './CurrencySelector';
 import { GrowthIntelligenceAnimation } from './GrowthIntelligenceAnimation';
 import { IntelligenceSelector } from './IntelligenceSelector';
+import { StickyIntelligenceSelector } from './StickyIntelligenceSelector';
 import { products } from '../config/products';
 import { useProductSelection } from '../hooks/useProductSelection';
 import { usePricingState } from '../hooks/usePricingState';
@@ -62,9 +63,9 @@ export const PricingCalculator: React.FC = () => {
       <GrowthIntelligenceAnimation />
 
       <StickyIntelligenceSelector 
-+        selectedModules={selectedProducts}
-+        onModuleToggle={handleProductToggle}
-+      />
+        selectedModules={selectedProducts}
+        onModuleToggle={handleProductToggle}
+     />
 
       <div className="flex justify-center mb-6">
         <CurrencySelector currency={currency} onCurrencyChange={setCurrency} />
