@@ -56,7 +56,7 @@ export const products: ProductConfig[] = [
   },
   {
     id: 'success',
-    name: 'Customer Success',
+    name: 'Churn and Expansion Intelligence',
     tag: 'For CSMs',
     description: 'Retention & Expansion',
     pricingType: 'free',
@@ -74,6 +74,7 @@ export const products: ProductConfig[] = [
   {
     id: 'revenue',
     name: 'Revenue Intelligence',
+    tag: 'For RevOps and P&L Leaders',
     description: 'Monetization & Growth Intelligence',
     pricingType: 'arr',
     features: [

@@ -64,7 +64,6 @@ export const CustomSlider: React.FC<CustomSliderProps> = ({
     <div className="mb-6">
       <div className="flex justify-between items-center mb-2">
         <label className="text-sm font-medium text-gray-700">{label}</label>
-        <span className="text-sm font-semibold text-blue-600">{formatValue(value)}</span>
       </div>
       <div className="relative">
         <input
@@ -79,6 +78,15 @@ export const CustomSlider: React.FC<CustomSliderProps> = ({
             background: `linear-gradient(to right, #3B82F6 0%, #3B82F6 ${percentage}%, #E5E7EB ${percentage}%, #E5E7EB 100%)`
           }}
         />
+        {/* Value display on top of the slider thumb */}
+        <div 
+          className="absolute -top-8 transform -translate-x-1/2 bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded shadow-lg"
+          style={{
+            left: `${percentage}%`
+          }}
+        >
+          {formatValue(value)}
+        </div>
         <div className="flex justify-between text-xs text-gray-500 mt-1">
           <span>{formatValue(min)}</span>
           <span>{formatValue(max)}</span>

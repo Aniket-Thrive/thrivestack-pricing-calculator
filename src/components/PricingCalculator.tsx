@@ -4,6 +4,7 @@ import { ProductCard } from './ProductCard';
 import { PricingSummary } from './PricingSummary';
 import { CurrencySelector } from './CurrencySelector';
 import { GrowthIntelligenceAnimation } from './GrowthIntelligenceAnimation';
+import { IntelligenceSelector } from './IntelligenceSelector';
 import { products } from '../config/products';
 import { useProductSelection } from '../hooks/useProductSelection';
 import { usePricingState } from '../hooks/usePricingState';
@@ -59,6 +60,11 @@ export const PricingCalculator: React.FC = () => {
       </div>
 
       <GrowthIntelligenceAnimation />
+
+      <IntelligenceSelector 
+        selectedModules={selectedProducts}
+        onModuleToggle={handleProductToggle}
+      />
 
       <div className="flex justify-center mb-6">
         <CurrencySelector currency={currency} onCurrencyChange={setCurrency} />

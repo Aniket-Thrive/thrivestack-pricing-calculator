@@ -23,15 +23,15 @@ export const GrowthIntelligenceAnimation: React.FC = () => {
   ];
 
   return (
-    <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg border border-blue-200 mb-8">
+    <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-3 rounded-lg border border-blue-200 mb-4">
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <div className="text-center mb-4">
-          <CollapsibleTrigger className="flex items-center justify-center space-x-2 mx-auto hover:bg-blue-100 rounded-lg px-3 py-2 transition-colors">
-            <Zap className="text-blue-600" size={24} />
-            <h2 className="text-xl font-bold text-gray-900">How Growth Intelligence Works</h2>
-            {isOpen ? <ChevronUp className="text-blue-600" size={20} /> : <ChevronDown className="text-blue-600" size={20} />}
+        <div className="text-center mb-2">
+          <CollapsibleTrigger className="flex items-center justify-center space-x-2 mx-auto hover:bg-blue-100 rounded-lg px-2 py-1 transition-colors">
+            <Zap className="text-blue-600" size={18} />
+            <h2 className="text-lg font-bold text-gray-900">How Growth Intelligence Works</h2>
+            {isOpen ? <ChevronUp className="text-blue-600" size={16} /> : <ChevronDown className="text-blue-600" size={16} />}
           </CollapsibleTrigger>
-          <p className="text-gray-600 text-sm mt-2">
+          <p className="text-gray-600 text-xs mt-1">
             Connecting Marketing, Product, Revenue and Accounts for unified growth insights
           </p>
         </div>
