@@ -61,10 +61,10 @@ export const PricingCalculator: React.FC = () => {
 
       <GrowthIntelligenceAnimation />
 
-      <IntelligenceSelector 
-        selectedModules={selectedProducts}
-        onModuleToggle={handleProductToggle}
-      />
+      <StickyIntelligenceSelector 
++        selectedModules={selectedProducts}
++        onModuleToggle={handleProductToggle}
++      />
 
       <div className="flex justify-center mb-6">
         <CurrencySelector currency={currency} onCurrencyChange={setCurrency} />
